@@ -2,4 +2,6 @@
 bin
 obj
 *.db
-appsettings.json
+
+# ignore appsettings configuration files
+**/appsettings.development.json
