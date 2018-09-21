@@ -1,0 +1,14 @@
+<div class="container">
+  <table class="table table-striped table-dark">
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col}}
+      </th>
+    </tr>
+    <tr *ngFor="let ranking of rankings">
+      <td *ngFor="let col of columns">
+        {{ranking[col]}}
+      </td>
+    </tr>
+  </table>
+</div>
