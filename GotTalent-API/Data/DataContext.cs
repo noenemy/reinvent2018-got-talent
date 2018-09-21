@@ -7,6 +7,8 @@ namespace GotTalent_API.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base (options) {}
 
-        public DbSet<MyValue> MyValues { get; set; }
+        public DbSet<UserScore> UserScore { get; set; }
+        public DbSet<StageLog> StageLog { get; set; }
+        public DbSet<Ranking> Ranking { get; set; }
     }
 }
