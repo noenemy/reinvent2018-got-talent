@@ -9,5 +9,5 @@ export const appRoutes: Routes = [
     { path: 'leaderboard', component: RankingComponent },
     { path: 'playdemo', component: PlaydemoComponent },
     { path: 'aboutus', component: AboutusComponent },
-    //{ path: '**', redirectTo: 'home', pathMatch: 'full' }
+    { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

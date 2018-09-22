@@ -23,7 +23,7 @@ import { AboutusComponent } from './aboutus/aboutus.component';
    imports: [
       BrowserModule,
       HttpClientModule,
-      RouterModule.forRoot(appRoutes);
+      RouterModule.forRoot(appRoutes)
    ],
    providers: [],
    bootstrap: [

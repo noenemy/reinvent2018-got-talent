@@ -25,7 +25,7 @@ export class RankingComponent implements OnInit {
     });
   }
 
-  getColumns(): string[]{
-    return ['seqNum', 'userNum', 'totalScore', 'rankNum', 'createTime']};
+  getColumns(): string[] {
+    return ['seqNum', 'userNum', 'totalScore', 'rankNum', 'createTime'];
   }
 }
