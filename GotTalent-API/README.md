@@ -1,6 +1,6 @@
 # GotTalent-API
 
-This project was generated with .Net core(https://github.com/angular/angular-cli) version 6.0.8.
+This project was generated with .Net core(https://www.microsoft.com/net/download) version 2.1.
 
 ## Development server
 
