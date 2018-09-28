@@ -8,6 +8,7 @@
 */
 use gottalent2018;
 
+-- 게임 테이블. 유저 당 하나의 고유한 row가 생성되며, 플레이 완료 후 end_date가 업데이트되는 구조임
 CREATE TABLE tb_game
 (
   game_id INT NOT NULL AUTO_INCREMENT,
@@ -18,6 +19,7 @@ CREATE TABLE tb_game
   PRIMARY KEY(game_id)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 캐스팅 마스터 코드 테이블. 영화명, 배우(역할)명, 성별, 등급 정보
 CREATE TABLE tb_cast
 (
   cast_id INT NOT NULL AUTO_INCREMENT,
@@ -28,6 +30,7 @@ CREATE TABLE tb_cast
   PRIMARY KEY(cast_id)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 게임 내 스테이지 별 로그 테이블
 CREATE TABLE tb_stage_log
 (
   game_id INT NOT NULL,
@@ -44,12 +47,13 @@ CREATE TABLE tb_stage_log
     ON UPDATE RESTRICT
 ) DEFAULT CHARSET=utf8;
 
+-- 게임 별 최종 결과 테이블. 전체 스코어, 랭킹, 캐스팅 결과 저장. 랭킹(total_rank)컬럼만 전체 사용자 플레이 결과에 따라 업데이트됨
 CREATE TABLE tb_game_result
 (
   game_id INT NOT NULL,
   result_page_url VARCHAR(2083),
   total_score DOUBLE,
-  total_rant BIGINT,
+  total_rank BIGINT,
   cast_result INT,
   grade_result VARCHAR(2),
   gender_result VARCHAR(10),
@@ -65,6 +69,7 @@ CREATE TABLE tb_game_result
     ON UPDATE RESTRICT
 ) DEFAULT CHARSET=utf8;
 
+-- 스테이지 타입 별 랭킹 테이블. action_type 별로 랭킹을 산정/결과 
 CREATE TABLE tb_game_rank_type
 (
   game_id INT NOT NULL,
