@@ -2,34 +2,40 @@
 <h1 class="text-secondary text-center">Play demo!</h1>
 <br>
 
-<p>
-    This is a demonstration page for
-    <a href="https://amw.github.io/jpeg_camera/doc/">JpegCamera library</a>.
-  </p>
+<p class="text-center">
+    This demo is powered by 
+    <a href="https://www.npmjs.com/package/ngx-webcam">Ngx-webcam</a>.
+    <a href="https://github.com/basst314/ngx-webcam">GitHub</a>
+</p>
 
-  <div id="camera_info"></div>
-  <div id="stream_stats"></div>
+<div class="text-center">
+    <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+            [videoOptions]="videoOptions"
+            (cameraSwitched)="cameraWasSwitched($event)"
+            (initError)="handleInitError($event)"
+    ></webcam>
 
-  <div id="camera">
-    <div class="placeholder">
-      Your browser does not support camera access.<br>
-      We recommend
-      <a href="https://www.google.com/chrome/" target="_blank">Chrome</a>
-      &mdash; modern, secure, fast browser from Google.<br>
-      It's free.
-    </div>
-  </div><br>
+    <br/>
+    <button class="btn btn-primary mr-2" (click)="triggerSnapshot();">Take A Snapshot</button>
+    <button class="btn btn-secondary" (click)="toggleWebcam();">Toggle Webcam</button>
+    <br/>
+    <!--
+    <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+    <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
+    <br/>
+    DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+    <button (click)="showNextWebcam(deviceId);">Activate</button>
+    -->
 
-  <button id="take_snapshots">Take more snapshots</button>
-  <button id="show_stream">Show stream</button><br>
+</div>
 
-  <div id="snapshots"></div>
+<div class="snapshot" *ngIf="webcamImage">
+  <h2>Nice one!</h2>
+  <img [src]="webcamImage.imageAsDataUrl"/>
+</div>
 
-  <button id="discard_snapshot">Discard snapshot</button>
-  <button id="upload_snapshot">Upload to URL</button><br>
-
-  <input type="text" id="api_url" placeholder="https://example.com/upload"><br>
-
-  <img src="loader.gif" id="loader">
-  <div id="upload_status"></div>
-  <div id="upload_result"></div>
+<h4 *ngIf="errors.length > 0">Messages:</h4>
+<ul *ngFor="let error of errors">
+  <li>{{error | json}}</li>
+</ul>

@@ -10,6 +10,7 @@ import { PlaydemoComponent } from './playdemo/playdemo.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { AboutusComponent } from './aboutus/aboutus.component';
+import { WebcamModule } from 'ngx-webcam';
 
 @NgModule({
    declarations: [
@@ -23,7 +24,8 @@ import { AboutusComponent } from './aboutus/aboutus.component';
    imports: [
       BrowserModule,
       HttpClientModule,
-      RouterModule.forRoot(appRoutes)
+      RouterModule.forRoot(appRoutes),
+      WebcamModule
    ],
    providers: [],
    bootstrap: [
