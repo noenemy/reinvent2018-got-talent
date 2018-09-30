@@ -12,5 +12,6 @@ namespace GotTalent_API.Data
         public DbSet<Ranking> Ranking { get; set; }
         public DbSet<Game> Game { get; set; }
         public DbSet<Casting> Casting { get; set; }
+        public DbSet<GameResult> GameResult { get; set; }
     }
 }
