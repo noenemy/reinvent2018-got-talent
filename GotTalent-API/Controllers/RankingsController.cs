@@ -23,15 +23,15 @@ namespace GotTalent_API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRankings()
         {
-            var values = await _context.Ranking.ToListAsync();
+            var values = await _context.GameResult.ToListAsync();
             return Ok(values);
         }
 
-        // GET api/rankings/5
-        [HttpGet("{seqNum}")]
-        public async Task<IActionResult> GetRanking(int seqNum)
+        // GET api/rankings/happy
+        [HttpGet("{action_type}")]
+        public async Task<IActionResult> GetRankingsByType(string action_type)
         {
-            var value = await _context.Ranking.FirstOrDefaultAsync(x => x.SeqNum == seqNum);
+            var value = await _context.RankingByType.Select(x => x.action_type == action_type).ToListAsync();
             return Ok(value);
         }
 
