@@ -29,9 +29,9 @@ namespace GotTalent_API.Controllers
 
         // GET api/stagelogs/5
         [HttpGet("{seqNum}")]
-        public async Task<IActionResult> GetStageLog(int seqNum)
+        public async Task<IActionResult> GetStageLog(int game_id)
         {
-            var value = await _context.StageLog.FirstOrDefaultAsync(x => x.SeqNum == seqNum);
+            var value = await _context.StageLog.Where(x => x.game_id == game_id).ToListAsync();
             return Ok(value);
         }
 
@@ -42,13 +42,13 @@ namespace GotTalent_API.Controllers
         }
 
         // PUT api/stagelogs/5
-        [HttpPut("{SeqNum}")]
+        [HttpPut("{game_id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/stagelogs/5
-        [HttpDelete("{seqNum}")]
+        [HttpDelete("{game_id}")]
         public void Delete(int id)
         {
         }        

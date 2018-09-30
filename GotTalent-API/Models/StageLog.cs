@@ -1,15 +1,19 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GotTalent_API.Models
 {
+    [Table("tb_stage_log")]
     public class StageLog
     {
         [Key]
-        public int SeqNum { get; set; }
-        public int UserNum { get; set; }
-        public int ActionType { get; set; }
-        public int Score { get; set; }
-        public DateTime CreateTime { get; set; } 
+        public int game_id { get; set; }
+        public string action_type { get; set; }
+        public double score { get; set; }
+        public string file_loc { get; set; }
+        public int age { get; set; }
+        public string gender { get; set; }
+        public DateTime log_date { get; set; } 
     }
 }
