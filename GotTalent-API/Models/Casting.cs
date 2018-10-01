@@ -13,5 +13,7 @@ namespace GotTalent_API.Models
         public string actor { get; set; }
         public string gender { get; set; } // Male, Female
         public string grade { get; set; } // A, B, C ...
+        public string file_loc { get; set; }
+        public string action_type { get; set; }
     }
 }
