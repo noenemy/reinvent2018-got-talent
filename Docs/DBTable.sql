@@ -19,16 +19,18 @@ CREATE TABLE tb_game
   PRIMARY KEY(game_id)
 ) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- 캐스팅 마스터 코드 테이블. 영화명, 배우(역할)명, 성별, 등급 정보
-CREATE TABLE tb_cast
+-- 캐스팅 마스터 코드 테이블. 영화명, 배우(역할)명, 성별, 등급 정보, 이미지(S3), 연기유형(Emotion)
+CREATE TABLE tb_cast 
 (
-  cast_id INT NOT NULL AUTO_INCREMENT,
-  title VARCHAR(200),
-  actor VARCHAR(100),
-  gender VARCHAR(10),
-  grade VARCHAR(2),
-  PRIMARY KEY(cast_id)
-) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  cast_id int(11) NOT NULL AUTO_INCREMENT,
+  title varchar(200) DEFAULT NULL,
+  actor varchar(100) DEFAULT NULL,
+  gender varchar(10) DEFAULT NULL,
+  grade varchar(2) DEFAULT NULL,
+  file_loc varchar(2083) DEFAULT NULL,
+  action_type varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`cast_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- 게임 내 스테이지 별 로그 테이블
 CREATE TABLE tb_stage_log
