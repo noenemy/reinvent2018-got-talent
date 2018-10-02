@@ -21,7 +21,7 @@ This demo is to play a simple game using facial expression to be recognized usin
 5. Install Git
    - https://git-scm.com/download/mac
 6. Install Postman (optional)
-   - https://sqlitebrowser.org/
+   - http://www.getpostman.com
 7. Recommended extensions for Visual Studio Code (optional)
    - C# by OmniSharp
    - C# Extensions
