@@ -56,9 +56,7 @@ This demo is to play a simple game using facial expression to be recognized usin
    - Kestrel server will run on http://localhost:5000
 4. For Web project (AngularJS)
    - cd GotTalent-Web
-   - npm install
-     - `python2` is required.
-   - ng update (only requires the first time to build for getting app-modules)
+   - npm update (only requires the first time for downloading app-modules)
    - ng serve
    - The website will run on http://localhost:4200
 
