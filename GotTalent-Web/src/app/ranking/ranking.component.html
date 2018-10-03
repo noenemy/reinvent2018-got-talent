@@ -4,13 +4,67 @@
 <div class="container">
   <table class="table table-striped table-dark">
     <tr>
-      <th *ngFor="let col of columns">
+      <th *ngFor="let col of rankingColumns">
         {{col}}
       </th>
     </tr>
     <tr *ngFor="let ranking of rankings">
-      <td *ngFor="let col of columns">
+      <td *ngFor="let col of rankingColumns">
         {{ranking[col]}}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<br>
+<h1 class="text-secondary text-center">Games</h1>
+<br>
+<div class="container">
+  <table class="table table-striped table-primary">
+    <tr>
+        <th *ngFor="let col of gameColumns">
+          {{col}}
+        </th>
+      </tr>    
+    <tr *ngFor="let game of games">
+      <td *ngFor="let col of gameColumns">
+        {{game[col]}}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<br>
+<h1 class="text-secondary text-center">Castings</h1>
+<br>
+<div class="container">
+  <table class="table table-striped table-success">
+    <tr>
+        <th *ngFor="let col of castingColumns">
+          {{col}}
+        </th>
+      </tr>    
+    <tr *ngFor="let casting of castings">
+      <td *ngFor="let col of castingColumns">
+        {{casting[col]}}
+      </td>
+    </tr>
+  </table>
+</div>
+
+<br>
+<h1 class="text-secondary text-center">Stage Logs</h1>
+<br>
+<div class="container">
+  <table class="table table-striped table-info">
+    <tr>
+        <th *ngFor="let col of stageLogColumns">
+          {{col}}
+        </th>
+      </tr>    
+    <tr *ngFor="let stageLog of stageLogs">
+      <td *ngFor="let col of stageLogColumns">
+        {{stageLog[col]}}
       </td>
     </tr>
   </table>
