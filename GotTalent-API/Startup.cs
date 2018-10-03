@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Amazon.S3;
 using GotTalent_API.Data;
 using GotTalent_API.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace GotTalent_API
 {
@@ -30,6 +24,10 @@ namespace GotTalent_API
         {
             string connectionString = Helpers.GetRDSConnectionString(this.Configuration);
             services.AddDbContext<DataContext>(x => x.UseMySql(connectionString));
+
+            services.AddDefaultAWSOptions(this.Configuration.GetAWSOptions());
+            services.AddAWSService<IAmazonS3>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors();
         }
@@ -48,7 +46,7 @@ namespace GotTalent_API
 
            //app.UseHttpsRedirection();
            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.UseMvc();
+           app.UseMvc();
         }
     }
 }

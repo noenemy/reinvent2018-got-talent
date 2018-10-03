@@ -20,9 +20,11 @@ This demo is to play a simple game using facial expression to be recognized usin
    - Npm install -g @angular/cli@6.0.8
 5. Install Git
    - https://git-scm.com/download/mac
-6. Install Postman (optional)
+6. Install libgdiplus for using Graphics in API project
+   - brew install mono-libgdiplus
+7. Install Postman (optional)
    - http://www.getpostman.com
-7. Recommended extensions for Visual Studio Code (optional)
+8. Recommended extensions for Visual Studio Code (optional)
    - C# by OmniSharp
    - C# Extensions
    - NuGet package manager

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { HttpClient } from '@angular/common/http';
+import { Headers, Response, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'app-playdemo',
@@ -19,6 +21,8 @@ export class PlaydemoComponent implements OnInit {
   };
   public errors: WebcamInitError[] = [];
 
+  constructor(private http:HttpClient) { }
+
   // latest snapshot
   public webcamImage: WebcamImage = null;
 
@@ -36,6 +40,7 @@ export class PlaydemoComponent implements OnInit {
 
   public triggerSnapshot(): void {
     this.trigger.next();
+    this.postImage();
   }
 
   public toggleWebcam(): void {
@@ -69,5 +74,31 @@ export class PlaydemoComponent implements OnInit {
 
   public get nextWebcamObservable(): Observable<boolean|string> {
     return this.nextWebcam.asObservable();
+  }
+
+  public postImage() {
+    console.log(this.webcamImage.imageAsBase64);
+
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json');
+
+    const httpOptions = new RequestOptions({
+      headers: headers
+    });
+
+    // TODO : temporarily hardcoded for development
+    const body = {
+      gameId: 1,
+      actionType: 'Happiness',
+      base64Image: this.webcamImage.imageAsBase64
+    };
+
+    this.http.post('http://localhost:5000/api/gameplay', body, httpOptions)
+        .subscribe(response => {
+          console.log(response);
+      }, error => {
+        console.log(error);
+      });
   }
 }
