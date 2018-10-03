@@ -1,4 +1,5 @@
 ﻿using Amazon.S3;
+using Amazon.Rekognition;
 using GotTalent_API.Data;
 using GotTalent_API.Models;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,7 @@ namespace GotTalent_API
 
             services.AddDefaultAWSOptions(this.Configuration.GetAWSOptions());
             services.AddAWSService<IAmazonS3>();
+            services.AddAWSService<IAmazonRekognition>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddCors();

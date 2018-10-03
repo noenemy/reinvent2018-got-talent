@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response, RequestOptions } from '@angular/http';
 
 @Component({
@@ -79,13 +79,9 @@ export class PlaydemoComponent implements OnInit {
   public postImage() {
     console.log(this.webcamImage.imageAsBase64);
 
-    const headers = new Headers();
+    const headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json');
-
-    const httpOptions = new RequestOptions({
-      headers: headers
-    });
 
     // TODO : temporarily hardcoded for development
     const body = {
@@ -94,11 +90,11 @@ export class PlaydemoComponent implements OnInit {
       base64Image: this.webcamImage.imageAsBase64
     };
 
-    this.http.post('http://localhost:5000/api/gameplay', body, httpOptions)
+    this.http.post('http://localhost:5000/api/gameplay', body, { headers })
         .subscribe(response => {
-          console.log(response);
+          alert('Successfully uploaded!');
       }, error => {
-        console.log(error);
+        alert(error);
       });
   }
 }
