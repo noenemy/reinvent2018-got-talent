@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GotTalent_API.Data;
+using GotTalent_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,14 +38,35 @@ namespace GotTalent_API.Controllers
 
         // POST api/games
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> AddNewGame([FromForm] string userName)
         {
+            Game newGame = new Game{
+                name = userName,
+                share_yn = "N",
+                start_date = DateTime.Now
+            };
+
+            var value = _context.Game.Add(newGame);
+            await _context.SaveChangesAsync();
+
+            return Ok(newGame.game_id);            
         }
 
         // PUT api/games/5
         [HttpPut("{game_id}")]
-        public void Put(int game_id, [FromBody] string value)
+        public async Task<IActionResult> Put(int game_id, [FromForm] string shareYN)
         {
+            Game game = await _context.Game.FirstOrDefaultAsync(x => x.game_id == game_id);
+            if (game != null)
+            {
+                game.share_yn = shareYN;
+                game.end_date = DateTime.Now;
+            }
+
+            var value = _context.Game.Update(game);
+            await _context.SaveChangesAsync();
+
+            return Ok(game);       
         }
 
         // DELETE api/games/5
