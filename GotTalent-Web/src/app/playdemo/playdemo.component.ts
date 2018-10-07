@@ -85,12 +85,12 @@ export class PlaydemoComponent implements OnInit {
 
     // TODO : temporarily hardcoded for development
     const body = {
-      gameId: 1,
+      gameId: 3,
       actionType: 'Happiness',
       base64Image: this.webcamImage.imageAsBase64
     };
 
-    this.http.post('http://localhost:5000/api/gameplay', body, { headers })
+    this.http.post('http://localhost:5000/api/stageLogs', body, { headers })
         .subscribe(response => {
           alert('Successfully uploaded!');
       }, error => {
