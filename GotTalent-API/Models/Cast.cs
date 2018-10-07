@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace GotTalent_API.Models
 {
     [Table("tb_cast")]
-    public class Casting
+    public class Cast
     {
         [Key]
         public int cast_id { get; set; }

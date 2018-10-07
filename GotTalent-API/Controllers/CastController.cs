@@ -10,44 +10,44 @@ namespace GotTalent_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CastingsController : ControllerBase
+    public class CastController : ControllerBase
     {
         private DataContext _context;
 
-        public CastingsController(DataContext context)
+        public CastController(DataContext context)
         {
             _context = context;
         }
 
-        // GET api/castings
+        // GET api/cast
         [HttpGet]
-        public async Task<IActionResult> GetCastings()
+        public async Task<IActionResult> GetCastList()
         {
-            var values = await _context.Casting.ToListAsync();
+            var values = await _context.Cast.ToListAsync();
             return Ok(values);
         }
 
-        // GET api/castings/5
+        // GET api/cast/5
         [HttpGet("{cast_id}")]
-        public async Task<IActionResult> GetCasting(int cast_id)
+        public async Task<IActionResult> GetCast(int cast_id)
         {
-            var value = await _context.Casting.FirstOrDefaultAsync(x => x.cast_id == cast_id);
+            var value = await _context.Cast.FirstOrDefaultAsync(x => x.cast_id == cast_id);
             return Ok(value);
         }
 
-        // POST api/castings
+        // POST api/cast
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/castings/5
+        // PUT api/cast/5
         [HttpPut("{cast_id}")]
         public void Put(int cast_id, [FromBody] string value)
         {
         }
 
-        // DELETE api/castings/5
+        // DELETE api/cast/5
         [HttpDelete("{cast_id}")]
         public void Delete(int cast_id)
         {

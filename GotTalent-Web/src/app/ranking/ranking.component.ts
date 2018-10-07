@@ -9,11 +9,11 @@ import { HttpClient } from '@angular/common/http';
 export class RankingComponent implements OnInit {
   rankingColumns: string[];
   gameColumns: string[];
-  castingColumns: string[];
+  castColumns: string[];
   stageLogColumns: string[];
   rankings: any;
   games: any;
-  castings: any;
+  castList: any;
   stageLogs: any;
 
   constructor(private http:HttpClient) { }
@@ -21,11 +21,11 @@ export class RankingComponent implements OnInit {
   ngOnInit() {
     this.rankingColumns = this.getRankingColumns();
     this.gameColumns = this.getGameColumns();
-    this.castingColumns = this.getCastingColumns();
+    this.castColumns = this.getCastColumns();
     this.stageLogColumns = this.getStageLogColumns();
     this.getRankings();
     this.getGames();
-    this.getCastings();
+    this.getCastList();
     this.getStageLogs();
   }
 
@@ -45,9 +45,9 @@ export class RankingComponent implements OnInit {
     });
   }
 
-  getCastings() {
-    this.http.get('http://localhost:5000/api/castings').subscribe(response => {
-      this.castings = response;
+  getCastList() {
+    this.http.get('http://localhost:5000/api/cast').subscribe(response => {
+      this.castList = response;
     }, error => {
       console.log(error);
     });
@@ -69,7 +69,7 @@ export class RankingComponent implements OnInit {
     return ['game_id', 'name', 'share_yn', 'start_date', 'end_date'];
   }
 
-  getCastingColumns(): string[] {
+  getCastColumns(): string[] {
     return ['cast_id', 'title', 'actor', 'gender', 'grade', 'file_loc', 'action_type'];
   }
 
