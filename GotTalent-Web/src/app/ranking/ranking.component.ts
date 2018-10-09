@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { GameService } from '../_services/game.service';
+import { Game } from '../_models/game';
+import { StagelogService } from '../_services/stagelog.service';
+import { StageLog } from '../_models/stagelog';
+import { CastService } from '../_services/cast.service';
+import { Cast } from '../_models/cast';
+import { Ranking } from '../_models/ranking';
+import { RankingService } from '../_services/ranking.service';
 
 @Component({
   selector: 'app-ranking',
@@ -11,12 +19,16 @@ export class RankingComponent implements OnInit {
   gameColumns: string[];
   castColumns: string[];
   stageLogColumns: string[];
-  rankings: any;
-  games: any;
-  castList: any;
-  stageLogs: any;
+  rankings: Ranking[];
+  games: Game[];
+  castList: Cast[];
+  stageLogs: StageLog[];
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient, 
+    private gameService: GameService,
+    private stageLogService: StagelogService,
+    private castService: CastService,
+    private rankingService: RankingService) { }
 
   ngOnInit() {
     this.rankingColumns = this.getRankingColumns();
@@ -30,32 +42,32 @@ export class RankingComponent implements OnInit {
   }
 
   getRankings() {
-    this.http.get('http://localhost:5000/api/rankings').subscribe(response => {
-      this.rankings = response;
+    this.rankingService.getRankings().subscribe((rankings: Ranking[]) => {
+      this.rankings = rankings;
     }, error => {
       console.log(error);
     });
   }
 
   getGames() {
-    this.http.get('http://localhost:5000/api/games').subscribe(response => {
-      this.games = response;
+    this.gameService.getGames().subscribe((games: Game[]) => {
+      this.games = games;
     }, error => {
       console.log(error);
     });
   }
 
   getCastList() {
-    this.http.get('http://localhost:5000/api/cast').subscribe(response => {
-      this.castList = response;
+    this.castService.getCastList().subscribe((castList: Cast[]) => {
+      this.castList = castList;
     }, error => {
       console.log(error);
     });
   }
 
   getStageLogs() {
-    this.http.get('http://localhost:5000/api/stagelogs').subscribe(response => {
-      this.stageLogs = response;
+    this.stageLogService.getStageLogs().subscribe((stageLogs: StageLog[]) => {
+      this.stageLogs = stageLogs;
     }, error => {
       console.log(error);
     });

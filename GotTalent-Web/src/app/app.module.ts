@@ -11,6 +11,10 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { WebcamModule } from 'ngx-webcam';
+import { GameService } from './_services/game.service';
+import { StagelogService } from './_services/stagelog.service';
+import { CastService } from './_services/cast.service';
+import { RankingService } from './_services/ranking.service';
 
 @NgModule({
    declarations: [
@@ -27,7 +31,12 @@ import { WebcamModule } from 'ngx-webcam';
       RouterModule.forRoot(appRoutes),
       WebcamModule
    ],
-   providers: [],
+   providers: [
+       GameService,
+       StagelogService,
+       CastService,
+       RankingService
+   ],
    bootstrap: [
       AppComponent
    ]
