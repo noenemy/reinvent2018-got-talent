@@ -15,6 +15,11 @@ import { GameService } from './_services/game.service';
 import { StagelogService } from './_services/stagelog.service';
 import { CastService } from './_services/cast.service';
 import { RankingService } from './_services/ranking.service';
+import { GameComponent } from './game/game.component';
+import { GameSplashComponent } from './game/game-splash/game-splash.component';
+import { GameStartComponent } from './game/game-start/game-start.component';
+import { GameStageComponent } from './game/game-stage/game-stage.component';
+import { GameResultComponent } from './game/game-result/game-result.component';
 
 @NgModule({
    declarations: [
@@ -23,7 +28,12 @@ import { RankingService } from './_services/ranking.service';
       NavComponent,
       HomeComponent,
       PlaydemoComponent,
-      AboutusComponent
+      AboutusComponent,
+      GameComponent,
+      GameSplashComponent,
+      GameStartComponent,
+      GameStageComponent,
+      GameResultComponent
    ],
    imports: [
       BrowserModule,
@@ -32,10 +42,10 @@ import { RankingService } from './_services/ranking.service';
       WebcamModule
    ],
    providers: [
-       GameService,
-       StagelogService,
-       CastService,
-       RankingService
+      GameService,
+      StagelogService,
+      CastService,
+      RankingService
    ],
    bootstrap: [
       AppComponent
