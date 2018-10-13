@@ -1,3 +1,43 @@
-<p>
-  game-stage works!
-</p>
+<div class="container text-center">
+    <h5 class="text-warning">[TODO: stage screen]</h5>
+    <h1 class="display-3">Ready? Action!</h1>
+    <h5 class="text-gray-soft text-regular">Smile as you can.</h5>
+    {{ stage }}
+    <br>
+
+    <div class="text-center">
+        <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                [videoOptions]="videoOptions"
+                (cameraSwitched)="cameraWasSwitched($event)"
+                (initError)="handleInitError($event)">
+        </webcam>
+    
+        <br/>
+        <button class="btn btn-primary mr-2" (click)="triggerSnapshot();">Take A Snapshot</button>
+        <button class="btn btn-secondary" (click)="toggleWebcam();">Toggle Webcam</button>
+        <br/>
+        <!--
+        <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
+        <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
+        <br/>
+        DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
+        <button (click)="showNextWebcam(deviceId);">Activate</button>
+        -->
+    
+    </div>
+    
+    <div class="snapshot" *ngIf="webcamImage">
+      <h2>Nice one!</h2>
+      <img [src]="webcamImage.imageAsDataUrl"/>
+      <br><br>
+      <div class="text-center">
+          <button type="button" class="btn btn-primary btn-lg" (click)="gameEnd()">SEE JUDGES</button>
+      </div>  
+    </div>
+    
+    <h4 *ngIf="errors.length > 0">Messages:</h4>
+    <ul *ngFor="let error of errors">
+      <li>{{error | json}}</li>
+    </ul>
+  

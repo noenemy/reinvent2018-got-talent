@@ -14,4 +14,7 @@ export class GameComponent implements OnInit {
     this.stage = 'splash';
   }
 
+  goStage(stage: string) {
+    this.stage = stage;
+  }
 }

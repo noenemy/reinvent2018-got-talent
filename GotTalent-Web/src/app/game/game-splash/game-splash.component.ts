@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-game-splash',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-splash.component.css']
 })
 export class GameSplashComponent implements OnInit {
-
+  @Input() stage: string;
+  @Output() go = new EventEmitter<string>();
   constructor() { }
 
   ngOnInit() {
   }
 
+  gameStart() {
+    this.go.emit('start');
+  }
 }

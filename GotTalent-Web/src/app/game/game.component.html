@@ -1,8 +1,5 @@
-<p>
-  game works! {{this.stage}}
-</p>
-
-<app-game-splash *ngIf="this.stage == 'splash'"></app-game-splash>
-<app-game-start *ngIf="this.stage == 'start'"></app-game-start>
-<app-game-stage *ngIf="this.stage == 'stage'"></app-game-stage>
-<app-game-result *ngIf="this.stage == 'result'"></app-game-result>
+<p></p>
+<app-game-splash *ngIf="this.stage == 'splash'" (go)="goStage($event)"></app-game-splash>
+<app-game-start *ngIf="this.stage == 'start'" (go)="goStage($event)"></app-game-start>
+<app-game-stage *ngIf="this.stage == 'stage'" (go)="goStage($event)"></app-game-stage>
+<app-game-result *ngIf="this.stage == 'result'" (go)="goStage($event)"></app-game-result>
