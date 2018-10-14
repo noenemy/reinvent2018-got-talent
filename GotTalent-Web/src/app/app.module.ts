@@ -20,6 +20,7 @@ import { GameSplashComponent } from './game/game-splash/game-splash.component';
 import { GameStartComponent } from './game/game-start/game-start.component';
 import { GameStageComponent } from './game/game-stage/game-stage.component';
 import { GameResultComponent } from './game/game-result/game-result.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
    declarations: [
@@ -39,7 +40,9 @@ import { GameResultComponent } from './game/game-result/game-result.component';
       BrowserModule,
       HttpClientModule,
       RouterModule.forRoot(appRoutes),
-      WebcamModule
+      WebcamModule,
+      FormsModule,
+      ReactiveFormsModule
    ],
    providers: [
       GameService,

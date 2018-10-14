@@ -47,7 +47,7 @@ namespace GotTalent_API.Controllers
 
         // POST api/stagelogs
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] GameplayPostImageDTO dto)
+        public async Task<IActionResult> Post([FromBody] GameStagePostImageDTO dto)
         {
             Console.WriteLine("PostImage entered.");
 

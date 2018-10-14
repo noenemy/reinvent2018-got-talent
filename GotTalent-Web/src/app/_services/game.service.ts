@@ -24,4 +24,8 @@ export class GameService {
   getGame(game_id): Observable<Game> {
     return this.http.get<Game>(this.baseUrl + 'games/' + game_id);
   }
+
+  createGame(user_name): Observable<number> {
+    return this.http.post<number>(this.baseUrl + 'games', user_name);
+  }
 }

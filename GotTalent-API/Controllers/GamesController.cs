@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GotTalent_API.Data;
+using GotTalent_API.DTOs;
 using GotTalent_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,10 +39,10 @@ namespace GotTalent_API.Controllers
 
         // POST api/games
         [HttpPost]
-        public async Task<IActionResult> AddNewGame([FromForm] string userName)
+        public async Task<IActionResult> AddNewGame([FromBody] GameCreateDTO game)
         {
             Game newGame = new Game{
-                name = userName,
+                name = game.userName,
                 share_yn = "N",
                 start_date = DateTime.Now
             };
