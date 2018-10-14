@@ -86,7 +86,6 @@ export class GameStageComponent implements OnInit {
   }
 
   public postStageLog() {
-    console.log(this.webcamImage.imageAsBase64);
 
     const stageLog = {
       gameId: this.game_id,

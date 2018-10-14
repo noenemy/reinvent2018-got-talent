@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Amazon.Rekognition;
+using Amazon.Rekognition.Model;
 using Amazon.S3;
 using GotTalent_API.Data;
 using GotTalent_API.DTOs;
@@ -38,11 +39,11 @@ namespace GotTalent_API.Controllers
         }
 
         // GET api/stagelogs/5
-        [HttpGet("{seqNum}")]
+        [HttpGet("{game_id}")]
         public async Task<IActionResult> GetStageLog(int game_id)
         {
-            var value = await _context.StageLog.Where(x => x.game_id == game_id).ToListAsync();
-            return Ok(value);
+            var values = await _context.StageLog.Where(x => x.game_id == game_id).ToListAsync();
+            return Ok(values);
         }
 
         // POST api/stagelogs
@@ -67,15 +68,20 @@ namespace GotTalent_API.Controllers
             using (MemoryStream ms = new MemoryStream(imageByteArray))
             {
                 // call Rekonition API
-                RekognitionUtil.EvaluateEmotionScore(this.RekognitionClient, ms);   
+                FaceDetail faceDetail = await RekognitionUtil.GetFaceDetailFromStream(this.RekognitionClient, ms);   
 
                 // Upload image to S3 bucket
                 await Task.Run(() => S3Util.UploadToS3(this.S3Client, bucketName, keyName, ms));
 
-                // TODO : use real data retrieved from Rekognition
-                double emotionScore = 83.00f;
-                int evaluatedAge = 25;
-                string evaluatedGender = "Male";
+                // Get a specific emotion score
+                double emotionScore = 0.0f;
+                if (dto.actionType != "Profile")
+                {
+                    emotionScore = RekognitionUtil.GetEmotionScore(faceDetail.Emotions, dto.actionType);
+                }
+
+                int evaluatedAge = (faceDetail.AgeRange.High + faceDetail.AgeRange.Low) / 2;
+                string evaluatedGender = faceDetail.Gender.Value;
 
                 // Database update
                 newStageLog = new StageLog{
@@ -87,6 +93,9 @@ namespace GotTalent_API.Controllers
                     gender = evaluatedGender,
                     log_date = DateTime.Now 
                 };
+
+                Console.WriteLine("==== new stage log ====");
+                Console.WriteLine(newStageLog);
 
                 var value = _context.StageLog.Add(newStageLog);
                 await _context.SaveChangesAsync();  

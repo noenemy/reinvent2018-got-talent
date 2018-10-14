@@ -9,7 +9,7 @@ namespace GotTalent_API.Utils
 {
     public class RekognitionUtil
     {
-        public async static void EvaluateEmotionScore(IAmazonRekognition rekognitionClient, string bucketName, string keyName)
+        public async static void GetFaceDetailFromS3(IAmazonRekognition rekognitionClient, string bucketName, string keyName)
         {
             FaceDetail result = null;
             DetectFacesRequest detectFacesRequest = new DetectFacesRequest()
@@ -39,7 +39,7 @@ namespace GotTalent_API.Utils
             }
         }
 
-        public async static void EvaluateEmotionScore(IAmazonRekognition rekognitionClient, MemoryStream stream)
+        public async static Task<FaceDetail> GetFaceDetailFromStream(IAmazonRekognition rekognitionClient, MemoryStream stream)
         {
             FaceDetail result = null;
             DetectFacesRequest detectFacesRequest = new DetectFacesRequest()
@@ -55,7 +55,7 @@ namespace GotTalent_API.Utils
                 Task<DetectFacesResponse> detectTask = rekognitionClient.DetectFacesAsync(detectFacesRequest);
                 DetectFacesResponse detectFacesResponse = await detectTask;
 
-                PrintFaceDetails(detectFacesResponse.FaceDetails);
+               PrintFaceDetails(detectFacesResponse.FaceDetails);
 
                 if (detectFacesResponse.FaceDetails.Count > 0)
                     result = detectFacesResponse.FaceDetails[0]; // take the 1st face only
@@ -64,6 +64,39 @@ namespace GotTalent_API.Utils
             {
                 Console.WriteLine(rekognitionException.Message, rekognitionException.InnerException);
             }
+            return result;
+        }
+
+        public static float GetEmotionScore(List<Emotion> emotions, string actionType)
+        {
+            float result = 0.0f;
+            try
+            {
+                switch (actionType)
+                {
+                    case "Happiness":
+                        result = emotions.Find(x => x.Type == EmotionName.HAPPY).Confidence;
+                        break;
+                    case "Anger":
+                        result = emotions.Find(x => x.Type == EmotionName.ANGRY).Confidence;
+                        break;
+                    case "Sadness":
+                        result = emotions.Find(x => x.Type == EmotionName.SAD).Confidence;
+                        break;
+                    case "Suprise":
+                        result = emotions.Find(x => x.Type == EmotionName.SURPRISED).Confidence;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine(ex.Message);
+                result = 0.0f;
+            }
+
+            return result;
         }
 
         private static void PrintFaceDetails(List<FaceDetail> faceDetails)
