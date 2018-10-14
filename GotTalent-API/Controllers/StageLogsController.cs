@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,11 +59,10 @@ namespace GotTalent_API.Controllers
             // Retrieving image data
             // ex: game/10/Happiness.jpg
             string keyName = string.Format("game/{0}/{1}.jpg", dto.gameId, dto.actionType);
+            string croppedKeyName = string.Format("game/{0}/{1}_cropped.jpg", dto.gameId, dto.actionType);
             byte[] imageByteArray = Convert.FromBase64String(dto.base64Image);
             if (imageByteArray.Length == 0)
                 return BadRequest("Image length is 0.");
-
-            // Image manipulation (TODO: resize)
 
             StageLog newStageLog = null;
             // Evaluate rekognition metrics
@@ -70,8 +71,17 @@ namespace GotTalent_API.Controllers
                 // call Rekonition API
                 FaceDetail faceDetail = await RekognitionUtil.GetFaceDetailFromStream(this.RekognitionClient, ms);   
 
+                // Image manipulation (TODO: resize)
+                System.Drawing.Image originalImage = System.Drawing.Image.FromStream(ms);
+                System.Drawing.Image croppedImage = GetFaceCroppedImage(originalImage, faceDetail.BoundingBox);
+                MemoryStream croppedms = new MemoryStream();
+                croppedImage.Save(croppedms, ImageFormat.Jpeg);
+
                 // Upload image to S3 bucket
                 await Task.Run(() => S3Util.UploadToS3(this.S3Client, bucketName, keyName, ms));
+                await Task.Run(() => S3Util.UploadToS3(this.S3Client, bucketName, croppedKeyName, croppedms));
+
+                string signedURL = S3Util.GetPresignedURL(this.S3Client, bucketName, croppedKeyName);
 
                 // Get a specific emotion score
                 double emotionScore = 0.0f;
@@ -88,7 +98,7 @@ namespace GotTalent_API.Controllers
                     game_id = dto.gameId,
                     action_type = dto.actionType,
                     score = emotionScore,
-                    file_loc = keyName,
+                    file_loc = signedURL,
                     age = evaluatedAge,
                     gender = evaluatedGender,
                     log_date = DateTime.Now 
@@ -104,6 +114,20 @@ namespace GotTalent_API.Controllers
             // Send response
 
             return Ok(newStageLog);            
+        }
+
+        public static System.Drawing.Image GetFaceCroppedImage(System.Drawing.Image originalImage, BoundingBox box)
+        {
+            int left = Convert.ToInt32(originalImage.Width * box.Left);
+            int top = Convert.ToInt32(originalImage.Height * box.Top);
+            int width = Convert.ToInt32(originalImage.Width * box.Width);
+            int height = Convert.ToInt32(originalImage.Height * box.Height);
+
+            Rectangle rect = new Rectangle(left - (width*1/3), top - (height*2/5), width+(width*2/3), height+(height*2/3));
+            Bitmap bmp = originalImage as Bitmap;
+            Bitmap croppedImage = bmp.Clone(rect, bmp.PixelFormat);
+
+            return croppedImage;
         }
 
         // PUT api/stagelogs/5

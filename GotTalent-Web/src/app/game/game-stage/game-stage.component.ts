@@ -18,6 +18,9 @@ export class GameStageComponent implements OnInit {
   @Input() action_type: string;
   @Output() stageCompleted = new EventEmitter<string>();
 
+  imageSignedURL: string;
+  your_score: any;
+
   // toggle webcam on/off
   public showWebcam = true;
   public allowCameraSwitch = true;
@@ -46,6 +49,11 @@ export class GameStageComponent implements OnInit {
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       });
+  }
+
+  gameEnd() {
+    console.log('game end!');
+    this.stageCompleted.emit(this.action_type);
   }
 
   public triggerSnapshot(): void {
@@ -98,10 +106,12 @@ export class GameStageComponent implements OnInit {
 
       this.alertify.success('Successfully uploaded!');
 
+      this.imageSignedURL = stageLogResult.file_loc;
+
       if (stageLogResult.action_type === 'Profile') {
-        this.alertify.message('age:' + stageLogResult.age + ', gender:' + stageLogResult.gender);
+        this.your_score = 'age:' + stageLogResult.age + ', gender:' + stageLogResult.gender;
       } else {
-        this.alertify.message(stageLogResult.action_type + ':' + stageLogResult.score);
+        this.your_score = stageLogResult.score;
       }
 
       this.stageCompleted.emit(this.action_type);

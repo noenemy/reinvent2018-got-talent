@@ -44,7 +44,9 @@ export class GameComponent implements OnInit {
         this.action_type = 'Suprise';
         break;
       case 'Suprise':
-        console.log('Ok. game completed. Now go to result page.')
+        this.action_type = 'NoMoreAction';
+        break;
+      case 'NoMoreAction':
         isGameCompleted = true;
         break;
     }

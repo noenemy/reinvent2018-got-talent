@@ -1,6 +1,8 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Security.Policy;
+using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Transfer;
 
@@ -11,7 +13,7 @@ namespace GotTalent_API.Utils
         public static void UploadToS3(IAmazonS3 s3Client, string bucketName, string key, Stream stream)
         {
             Console.WriteLine("UploadToS3 entered." + stream.Length);
-            
+            string signedUrl = string.Empty;
             try
             {
                 var uploadRequest = new TransferUtilityUploadRequest
@@ -31,6 +33,12 @@ namespace GotTalent_API.Utils
             {
                 Console.WriteLine(s3Exception.Message, s3Exception.InnerException);
             }
+        }
+
+        public static string GetPresignedURL(IAmazonS3 s3Client, string bucketName, string key)
+        {
+            string signedUrl = s3Client.GeneratePreSignedURL(bucketName, key, DateTime.Now.AddMinutes(20), null);
+            return signedUrl;
         }
 
         private Image CreateSampleImage(string message)
