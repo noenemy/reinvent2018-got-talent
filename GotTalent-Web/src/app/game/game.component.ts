@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class GameComponent implements OnInit {
   stage: string;
   game_id: number;
+  action_type: string;
 
   constructor() { }
 
@@ -18,5 +19,40 @@ export class GameComponent implements OnInit {
 
   goStage(stage: string) {
     this.stage = stage;
+  }
+
+  onGameCreated(game_id: number) {
+    this.game_id = game_id;
+    this.action_type = 'Profile';
+    this.goStage('stage');
+  }
+
+  onStageCompleted(action_type: string) {
+    let isGameCompleted = false;
+
+    switch (action_type) {
+      case 'Profile':
+        this.action_type = 'Happiness';
+        break;
+      case 'Happiness':
+        this.action_type = 'Anger';
+        break;
+      case 'Anger':
+        this.action_type = 'Sadness';
+        break;
+      case 'Sadness':
+        this.action_type = 'Suprise';
+        break;
+      case 'Suprise':
+        console.log('Ok. game completed. Now go to result page.')
+        isGameCompleted = true;
+        break;
+    }
+
+    if (isGameCompleted) {
+      this.goStage('result');
+    } else {
+      this.goStage('stage');
+    }
   }
 }

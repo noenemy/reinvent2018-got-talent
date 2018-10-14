@@ -3,6 +3,8 @@ import { Observable, Subject } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response, RequestOptions } from '@angular/http';
+import { AlertifyService } from '../../_services/alertify.service';
+import { StagelogService } from '../../_services/stagelog.service';
 
 @Component({
   selector: 'app-game-stage',
@@ -11,7 +13,9 @@ import { Headers, Response, RequestOptions } from '@angular/http';
 })
 export class GameStageComponent implements OnInit {
   @Input() stage: string;
-  @Output() go = new EventEmitter<string>();
+  @Input() game_id: number;
+  @Input() action_type: string;
+  @Output() stageCompleted = new EventEmitter<string>();
 
   // toggle webcam on/off
   public showWebcam = true;
@@ -24,7 +28,9 @@ export class GameStageComponent implements OnInit {
   };
   public errors: WebcamInitError[] = [];
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient,
+    private stagelogService: StagelogService,
+    private alertify: AlertifyService) { }
 
   // latest snapshot
   public webcamImage: WebcamImage = null;
@@ -43,7 +49,7 @@ export class GameStageComponent implements OnInit {
 
   public triggerSnapshot(): void {
     this.trigger.next();
-    this.postImage();
+    this.postStageLog();
   }
 
   public toggleWebcam(): void {
@@ -62,7 +68,7 @@ export class GameStageComponent implements OnInit {
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
+    console.log('received webcam image', webcamImage);
     this.webcamImage = webcamImage;
   }
 
@@ -79,30 +85,21 @@ export class GameStageComponent implements OnInit {
     return this.nextWebcam.asObservable();
   }
 
-  public postImage() {
+  public postStageLog() {
     console.log(this.webcamImage.imageAsBase64);
 
-    const headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
-
-    // TODO : temporarily hardcoded for development
-    const body = {
-      gameId: 3,
-      actionType: 'Happiness',
+    const stageLog = {
+      gameId: this.game_id,
+      actionType: this.action_type,
       base64Image: this.webcamImage.imageAsBase64
     };
 
-    this.http.post('http://localhost:5000/api/stageLogs', body, { headers })
-        .subscribe(response => {
-          alert('Successfully uploaded!');
-      }, error => {
-        alert(error);
-      });
-  }
-
-  gameEnd() {
-    this.go.emit('result');
+    this.stagelogService.createStageLog(stageLog).subscribe(response => {
+      this.alertify.success('Successfully uploaded!');
+      this.stageCompleted.emit(this.action_type);
+    }, error => {
+      this.alertify.error(error);
+    });
   }
 }
 

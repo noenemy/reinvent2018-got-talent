@@ -12,7 +12,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 export class GameStartComponent implements OnInit {
   @Input() stage: string;
   @Input() game_id: number;
-  @Output() go = new EventEmitter<string>();
+  @Output() gameCreated = new EventEmitter<number>();
   gameForm: FormGroup;
 
   constructor(private http:HttpClient,
@@ -33,21 +33,18 @@ export class GameStartComponent implements OnInit {
   createGame() {
 
     console.log(this.gameForm.value);
-    const headers = new HttpHeaders();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
 
     this.gameService.createGame(this.gameForm.value).subscribe((newGameId: number) => {
 
       this.alertify.success('A new game created : ' + newGameId);
       this.gameStart(newGameId);
     }, error => {
-      console.log(error);
+      this.alertify.error(error);
     });
   }
 
   gameStart(newGameId: number) {
     this.game_id = newGameId;
-    this.go.emit('stage');
+    this.gameCreated.emit(this.game_id);
   }
 }
