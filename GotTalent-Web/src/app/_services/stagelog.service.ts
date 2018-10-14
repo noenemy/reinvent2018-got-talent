@@ -20,7 +20,7 @@ export class StagelogService {
     return this.http.get<StageLog>(this.baseUrl + 'stagelogs/' + game_id + '/' + action_type);
   }
 
-  createStageLog(stage_log): Observable<number> {
-    return this.http.post<number>(this.baseUrl + 'stagelogs', stage_log);
+  addStageLog(stage_log): Observable<StageLog> {
+    return this.http.post<StageLog>(this.baseUrl + 'stagelogs', stage_log);
   }
 }

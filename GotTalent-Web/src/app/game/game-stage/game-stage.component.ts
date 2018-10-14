@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Response, RequestOptions } from '@angular/http';
 import { AlertifyService } from '../../_services/alertify.service';
 import { StagelogService } from '../../_services/stagelog.service';
+import { StageLog } from '../../_models/stagelog';
 
 @Component({
   selector: 'app-game-stage',
@@ -93,8 +94,16 @@ export class GameStageComponent implements OnInit {
       base64Image: this.webcamImage.imageAsBase64
     };
 
-    this.stagelogService.createStageLog(stageLog).subscribe(response => {
+    this.stagelogService.addStageLog(stageLog).subscribe((stageLogResult: StageLog) => {
+
       this.alertify.success('Successfully uploaded!');
+
+      if (stageLogResult.action_type === 'Profile') {
+        this.alertify.message('age:' + stageLogResult.age + ', gender:' + stageLogResult.gender);
+      } else {
+        this.alertify.message(stageLogResult.action_type + ':' + stageLogResult.score);
+      }
+
       this.stageCompleted.emit(this.action_type);
     }, error => {
       this.alertify.error(error);
