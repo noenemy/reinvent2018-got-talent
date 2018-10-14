@@ -65,23 +65,21 @@ namespace GotTalent_API.Controllers
                 return BadRequest("Image length is 0.");
 
             StageLog newStageLog = null;
-            // Evaluate rekognition metrics
+
             using (MemoryStream ms = new MemoryStream(imageByteArray))
             {
                 // call Rekonition API
                 FaceDetail faceDetail = await RekognitionUtil.GetFaceDetailFromStream(this.RekognitionClient, ms);   
 
-                // Image manipulation (TODO: resize)
+                // Crop image to get face only
                 System.Drawing.Image originalImage = System.Drawing.Image.FromStream(ms);
-                System.Drawing.Image croppedImage = GetFaceCroppedImage(originalImage, faceDetail.BoundingBox);
+                System.Drawing.Image croppedImage = GetCroppedFaceImage(originalImage, faceDetail.BoundingBox);
                 MemoryStream croppedms = new MemoryStream();
                 croppedImage.Save(croppedms, ImageFormat.Jpeg);
 
                 // Upload image to S3 bucket
-                await Task.Run(() => S3Util.UploadToS3(this.S3Client, bucketName, keyName, ms));
-                await Task.Run(() => S3Util.UploadToS3(this.S3Client, bucketName, croppedKeyName, croppedms));
-
-                string signedURL = S3Util.GetPresignedURL(this.S3Client, bucketName, croppedKeyName);
+                //await Task.Run(() => S3Util.UploadToS3(this.S3Client, bucketName, keyName, ms));
+                await Task.Run(() => S3Util.UploadToS3(this.S3Client, bucketName, keyName, croppedms));
 
                 // Get a specific emotion score
                 double emotionScore = 0.0f;
@@ -98,25 +96,24 @@ namespace GotTalent_API.Controllers
                     game_id = dto.gameId,
                     action_type = dto.actionType,
                     score = emotionScore,
-                    file_loc = signedURL,
+                    file_loc = keyName,
                     age = evaluatedAge,
                     gender = evaluatedGender,
                     log_date = DateTime.Now 
                 };
-
-                Console.WriteLine("==== new stage log ====");
-                Console.WriteLine(newStageLog);
 
                 var value = _context.StageLog.Add(newStageLog);
                 await _context.SaveChangesAsync();  
             }
 
             // Send response
+            string signedURL = S3Util.GetPresignedURL(this.S3Client, bucketName, keyName);
+            newStageLog.file_loc = signedURL;
 
             return Ok(newStageLog);            
         }
 
-        public static System.Drawing.Image GetFaceCroppedImage(System.Drawing.Image originalImage, BoundingBox box)
+        public static System.Drawing.Image GetCroppedFaceImage(System.Drawing.Image originalImage, BoundingBox box)
         {
             int left = Convert.ToInt32(originalImage.Width * box.Left);
             int top = Convert.ToInt32(originalImage.Height * box.Top);

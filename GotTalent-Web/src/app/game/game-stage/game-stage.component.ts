@@ -58,7 +58,7 @@ export class GameStageComponent implements OnInit {
 
   public triggerSnapshot(): void {
     this.trigger.next();
-    this.postStageLog();
+    this.addStageLog();
   }
 
   public toggleWebcam(): void {
@@ -94,7 +94,9 @@ export class GameStageComponent implements OnInit {
     return this.nextWebcam.asObservable();
   }
 
-  public postStageLog() {
+  public addStageLog() {
+
+    this.alertify.message('Now working on it...');
 
     const stageLog = {
       gameId: this.game_id,
