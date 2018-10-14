@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Input, Output, ViewChild } from '@angu
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { GameService } from '../../_services/game.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { AlertifyService } from '../../_services/alertify.service';
 
 @Component({
   selector: 'app-game-start',
@@ -16,7 +17,8 @@ export class GameStartComponent implements OnInit {
 
   constructor(private http:HttpClient,
     private gameService: GameService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private alertify: AlertifyService) { }
 
   ngOnInit() {
     this.initGameForm();
@@ -36,14 +38,16 @@ export class GameStartComponent implements OnInit {
     headers.append('Content-Type', 'application/json');
 
     this.gameService.createGame(this.gameForm.value).subscribe((newGameId: number) => {
-      this.game_id = newGameId;
-      //this.gameStart();
+
+      this.alertify.success('A new game created : ' + newGameId);
+      this.gameStart(newGameId);
     }, error => {
       console.log(error);
     });
   }
 
-  gameStart() {
+  gameStart(newGameId: number) {
+    this.game_id = newGameId;
     this.go.emit('stage');
   }
 }

@@ -21,6 +21,7 @@ import { GameStartComponent } from './game/game-start/game-start.component';
 import { GameStageComponent } from './game/game-stage/game-stage.component';
 import { GameResultComponent } from './game/game-result/game-result.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AlertifyService } from './_services/alertify.service';
 
 @NgModule({
    declarations: [
@@ -48,7 +49,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       GameService,
       StagelogService,
       CastService,
-      RankingService
+      RankingService,
+      AlertifyService
    ],
    bootstrap: [
       AppComponent
