@@ -7,7 +7,6 @@ namespace GotTalent_API.Models
     [Table("tb_stage_log")]
     public class StageLog
     {
-        [Key]
         public int game_id { get; set; }
         public string action_type { get; set; }
         public double score { get; set; }

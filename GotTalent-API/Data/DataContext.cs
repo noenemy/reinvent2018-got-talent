@@ -12,5 +12,12 @@ namespace GotTalent_API.Data
         public DbSet<Game> Game { get; set; }
         public DbSet<Cast> Cast { get; set; }
         public DbSet<GameResult> GameResult { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // To support composite key for StageLog table
+            modelBuilder.Entity<StageLog>()
+                .HasKey(c => new {c.game_id, c.action_type});
+        }
     }
 }
