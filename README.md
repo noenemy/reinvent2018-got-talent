@@ -61,5 +61,20 @@ This demo is to play a simple game using facial expression to be recognized usin
    - npm update (only requires the first time for downloading app-modules)
    - ng serve
    - The website will run on http://localhost:4200
-
    
+## 4. Deployment 
+
+### 4.1 Create required resources on AWS
+  
+### 4.2 IAM 
+  
+### 4.3 How to deploy Web site 
+
+### 4.4 How to deploy API server
+
+### 4.5 How to deploy Database
+
+
+
+
+
