@@ -1,13 +1,13 @@
-
--- 랭킹 새로 집계
+-- 게임 결과 업데이트 및 랭킹 재집계 
+-- 게임 결과 tb_game_result에 추가
 SET @total_score = 200;
 SET @game_id = 70;
 
-SELEECT @result_page_url = ,
-        @cast_result = ,
-        @grade_result = ,
-        @gender_result = ,
-        @age_result = 
+SELEECT @result_page_url = result_page_url,
+        @cast_result = cast_result,
+        @grade_result = grade_result,
+        @gender_result = gender_result,
+        @age_result = age_result
 FROM    tb_cast 
 WHERE   @total_score BETWEEN min_score and max_score;
 
