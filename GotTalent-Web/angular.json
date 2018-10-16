@@ -26,7 +26,8 @@
               "src/styles.css"
             ],
             "scripts": [
-              "node_modules/alertifyjs/build/alertify.min.js"
+              "node_modules/alertifyjs/build/alertify.min.js",
+              "node_modules/gsap/src/uncompressed/TweenMax.js"
             ]
           },
           "configurations": {
