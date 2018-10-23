@@ -1,9 +1,23 @@
 <div class="container text-center">
     <h5 class="text-warning">[TODO: result screen]</h5>
     <h1 class="display-3">You're so talented!</h1>
-    <h5 class="text-gray-soft text-regular">We will cast you as Anakin Skywalker of Star Wars III.</h5>
+    <br/><br/>
+    <h5 class="text-primary text-regular">Total Score : {{ game_result.newGameResult.total_score }}</h5>
+    <h5 class="text-primary text-regular">Grade : {{ game_result.newGameResult.grade_result }}</h5>
+    <h5 class="text-primary text-regular">Ranking : {{ game_result.newGameResult.total_rank }}</h5>
+    <h5 class="text-primary text-regular">Gender : {{ game_result.newGameResult.gender_result }}</h5>
+    <h5 class="text-primary text-regular">Age : {{ game_result.newGameResult.age_result }}</h5>
+    <h5 class="text-gray-soft text-regular">We will cast you as {{ game_result.actor }} of {{ game_result.title }}.</h5>
     {{ stage }}
-    <br>
+    
+    <br/><br/>
+
+    <div class="container" *ngFor="let url of game_result.signedURLs">
+      <img src="{{ url }}" width="200" height="200" />
+    </div>
+
+    <br/><br/>
+    
     <div class="text-center">
         <button type="button" class="btn btn-primary btn-lg" (click)="gameStart()">START A NEW AUDITION</button>
     </div>  

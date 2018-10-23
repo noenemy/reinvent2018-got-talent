@@ -28,4 +28,8 @@ export class GameService {
   createGame(user_name): Observable<number> {
     return this.http.post<number>(this.baseUrl + 'games', user_name);
   }
+
+  calcGameResult(game_id): Observable<number> {
+    return this.http.get<number>(this.baseUrl + 'gameresults/' + game_id + '/calc');
+  }
 }

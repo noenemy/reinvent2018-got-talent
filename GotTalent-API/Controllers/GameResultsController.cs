@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon.S3;
 using GotTalent_API.Data;
+using GotTalent_API.Models;
+using GotTalent_API.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,10 +16,12 @@ namespace GotTalent_API.Controllers
     public class GameResultsController : ControllerBase
     {
         private DataContext _context;
+        IAmazonS3 S3Client { get; set; }
 
-        public GameResultsController(DataContext context)
+        public GameResultsController(DataContext context, IAmazonS3 s3Client)
         {
             _context = context;
+            this.S3Client = s3Client;
         }
 
         // GET api/gameresults
@@ -35,10 +40,61 @@ namespace GotTalent_API.Controllers
             return Ok(value);
         }
 
-        // POST api/gameresults
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // POST api/gameresults/5/calc
+        [HttpGet("{game_id}/calc")]
+        public async Task<IActionResult> CalcGameResult(int game_id)
         {
+            string bucketName = "reinvent-gottalent";
+
+            var stageLogs = await _context.StageLog.Where(x => x.game_id == game_id).ToListAsync();
+            double totalScore = 0.0f;
+            string genderResult = "";
+            string gradeResult = "";
+            List<string> signedURLs = new List<string>();
+            int ageResult = 0;
+            foreach (var stageLog in stageLogs)
+            {
+                if (stageLog.action_type == "Profile")
+                {
+                    genderResult = stageLog.gender;
+                    ageResult = stageLog.age;
+                }
+                else
+                {
+                    totalScore += stageLog.score;
+                    signedURLs.Add(S3Util.GetPresignedURL(this.S3Client, bucketName, stageLog.file_loc));
+                }
+            }
+
+            // TODO : need to use Cache service for judgement
+            if (totalScore < 160)
+                gradeResult = "Extra";
+            else if (160 <= totalScore && totalScore < 190)
+                gradeResult = "Supporting";
+            else
+                gradeResult = "Leading";
+            
+            // casting randomly
+            int randomRecord = new Random().Next() % _context.Cast.Where(x => x.gender == genderResult && x.grade == gradeResult).Count();;
+            var castResult = _context.Cast.Where(x => x.gender == genderResult && x.grade == gradeResult).Skip(randomRecord).Take(1).First();
+            string resultPageUrl = "TBD";
+
+            // Database update
+            GameResult newGameResult = new GameResult{
+                game_id = game_id,
+                result_page_url = resultPageUrl,
+                total_score = totalScore,
+                total_rank = 0,
+                cast_result = castResult.cast_id,
+                grade_result = gradeResult,
+                gender_result = genderResult,
+                age_result = ageResult 
+            };
+
+            var value = _context.GameResult.Add(newGameResult);
+            await _context.SaveChangesAsync();  
+
+            return Ok(new {newGameResult, castResult.actor, castResult.title, signedURLs});
         }
 
         // PUT api/gameresults/5
