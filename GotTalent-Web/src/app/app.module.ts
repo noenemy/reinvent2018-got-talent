@@ -22,6 +22,7 @@ import { GameStageComponent } from './game/game-stage/game-stage.component';
 import { GameResultComponent } from './game/game-result/game-result.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertifyService } from './_services/alertify.service';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 @NgModule({
    declarations: [
@@ -43,7 +44,8 @@ import { AlertifyService } from './_services/alertify.service';
       RouterModule.forRoot(appRoutes),
       WebcamModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      AngularFontAwesomeModule
    ],
    providers: [
       GameService,

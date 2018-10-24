@@ -16,8 +16,13 @@
               </webcam>
           
               <br/>
-              <button class="btn btn-primary mr-2" (click)="triggerSnapshot();" *ngIf="action_type!='NoMoreAction'">Take A Snapshot</button>
-              <button class="btn btn-secondary" (click)="toggleWebcam();" *ngIf="action_type!='NoMoreAction'">Toggle Webcam</button>
+              <button class="btn btn-primary btn-lg mr-2" (click)="triggerSnapshot();" *ngIf="action_type!='NoMoreAction'">
+                <fa name="camera"></fa> Take A Snapshot
+              </button>
+              <button class="btn btn-secondary btn-lg" (click)="toggleWebcam();" *ngIf="action_type!='NoMoreAction'">
+                <fa name="toggle-on"></fa> Toggle Webcam
+              </button>
+              
               <br/>
               <!--
               <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
@@ -44,7 +49,9 @@
           </div>
           <br/>
           <div class="text-center" *ngIf="action_type=='NoMoreAction'">
-              <button type="button" class="btn btn-primary btn-lg" (click)="gameEnd()">SEE RESULT</button>
+              <button type="button" class="btn btn-primary btn-lg" (click)="gameEnd()">
+                <fa name="user-check"></fa> SEE RESULT
+              </button>
           </div> 
           
       </div>
