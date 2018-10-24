@@ -18,27 +18,41 @@ WHERE   @total_score BETWEEN min_score and max_score;
 INSERT INTO tb_game_result(game_id, result_page_url, total_score, total_rank, cast_result, grade_result, gender_result, age_result)
 VALUES(@game_id,@result_page_url,@total_score,null,@cast_result,@grade_result,@gender_result,@age_result);
 
--- 신규 랭킹 정보 생성
-SELECT b.game_id,
-       a.result_page_url,
-       a.total_score,
-       RANK() OVER (ORDER BY a.total_score DESC, a.game_id ASC) AS total_rank,
-       a.cast_result
-       a.grade_result,
-       a.gender_result,
-       a.age_result
-INTO  tb_game_result_tmp
-FROM  tb_game_result a, tb_game b on a.game_id=b.game_id
-WHERE b.share_yn = 'Y'
-GROUP BY a.game_id
-ORDER BY a.total_score DESC;
+-- 신규 랭킹 정보 생성:프로시저로 구현
+DROP PROCEDURE IF EXISTS sp_refresh_ranking;
 
--- 기존 랭킹 테이블과 swap
-RENAME TABLE tb_game_result TO tb_game_result_old;
-RENAME TABLE tb_game_result_tmp TO tb_game_result;
+DELIMITER //
+CREATE PROCEDURE sp_refresh_ranking()
+  BEGIN  
+    -- 기존 임시 테이블 삭제
+    DROP TABLE IF EXISTS tb_game_result_tmp;
+    DROP TABLE IF EXISTS tb_game_result_old;
 
--- 테이블 제약사항(PK,FK) 및 인덱스 생성
-ALTER TABLE tb_game_result ADD PRIMARY KEY(game_id);
+    -- 신규 랭킹 테이블 생성
+    CREATE TABLE tb_game_result_tmp
+    SELECT b.game_id,
+           a.result_page_url,
+           a.total_score,
+           RANK() OVER (ORDER BY a.total_score DESC, a.game_id ASC) AS total_rank,
+           a.cast_result,
+           a.grade_result,
+           a.gender_result,
+           a.age_result
+    FROM  tb_game_result a 
+          INNER JOIN tb_game b on a.game_id=b.game_id
+    WHERE b.share_yn = 'Y'
+    GROUP BY a.game_id
+    ORDER BY a.total_score DESC;
 
--- 기존 랭킹 테이블 삭제
-DROP TABLE tb_game_result_old;
+    -- 기존 서비스 랭킹+게임 결과 테이블과 replace
+    RENAME TABLE tb_game_result TO tb_game_result_old;
+    RENAME TABLE tb_game_result_tmp TO tb_game_result;
+
+    -- PK 설정
+    ALTER TABLE tb_game_result ADD PRIMARY KEY(game_id);
+    
+    -- 임시테이블 삭제
+    DROP TABLE tb_game_result_old;
+    COMMIT;    
+  END//
+DELIMITER ;
