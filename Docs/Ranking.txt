@@ -19,8 +19,6 @@ INSERT INTO tb_game_result(game_id, result_page_url, total_score, total_rank, ca
 VALUES(@game_id,@result_page_url,@total_score,null,@cast_result,@grade_result,@gender_result,@age_result);
 
 -- 신규 랭킹 정보 생성:프로시저로 구현
-use gottalent2018;
-
 DROP PROCEDURE IF EXISTS sp_refresh_ranking;
 
 DELIMITER //
@@ -55,8 +53,6 @@ CREATE PROCEDURE sp_refresh_ranking()
     
     -- 임시테이블 삭제
     DROP TABLE tb_game_result_old;
-    COMMIT;
-    
+    COMMIT;    
   END//
- 
 DELIMITER ;
