@@ -7,7 +7,9 @@
     <form [formGroup]="gameForm" (ngSubmit)="createGame()">
       <div class="input-group input-group-lg">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-lg">Name</span>
+            <span class="input-group-text" id="inputGroup-sizing-lg">
+              <fa name="user"></fa>&nbsp;Name
+            </span>
           </div>
           <input type="text" formControlName="userName" class="form-control"
             [ngClass]="{'is-invalid': gameForm.get('userName').errors && gameForm.get('userName').touched}"
