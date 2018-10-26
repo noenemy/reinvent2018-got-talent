@@ -5,21 +5,136 @@ Kei님,
 ## 게임 오프닝 멘트
 - 오디션을 시작하게 된 상황에 대한 설명
 - 예) 헐리우드 배우들이 실종된 상황 등등...
+  - In summer of 2018, with snap of fingers by purple monster, half of population was gone. With all sorrows people feels, Hollywood started to think they should bring more joy to all the rest of people and decided to make a movie called "The Revengers - Revise of stars". First audition was held 3 months ago and still there are no actors who can be the main role for this movie. Make yourself ready and save the world by becoming famous movie star at Re:Invent got talent 2018.
 
 ## 오디션 시작 멘트
 - 가벼운 인사
+  - Hello there! Welcome to Re:Invent got talent 2018. You probably already know half of population is gone after snaping fingers by purple monster. Doctor should've focused is neck first... Anyway, we are looking for new star to become main role for our movie. This movie is most wanted in 2019 and we guarantee you will become the hottest movie star in the multi universe. 
 - 이름이 무엇인지
-- 
+  - Let's begin with your name.
 
 ## 스테이지별 큐 사인
-- 오디션을 시작할께요. 
+- 오디션을 시작할께요.
+  - Hi XXX, we will start the audition right away. Lights, Camera, Action!
 - 웃는 표정 연기부터 해볼까요?
-- 
+  - Can we begin with your smile? A great actor should have nice smile!
+  - Happy
+    Out of all the feelings we get, my famous one would be happy. Let me see your happy face!
+  - Angry
+    You've already notice this audition is for "The Revengers". Revenge comes from the anger. Show us the angry face!
+  - Sad
+    When half of the population was gone, we all felt sad. It's time to get your memories back. Show us the sad face.
+  - Surprise
+    Imagine all the people are back from gone! How much would you be surprised!? Please show us the face expression if everyone really returns!
 
 ## 연기에 대한 피드백 
 - 감정(happy, sad, surprise, angry) * 연기등급(주연, 조연, 엑스트라) * 5개씩의 피드백
-
+  - Happy
+    - Main
+      - Fabulous! Your happy face definitely erased all the bad memories we just had.
+      - Very nice. I knew you are the one.
+      - Wow.. just wow.. nothing else to say.
+      - Are you sure this is your first time acting?
+      - A word can not express how much you are talented.
+    - Sub
+      - Well done.. But not enough for the main role
+      - I think you're just normal.
+      - Hm.. Not sure what it is but somethings missing.
+      - You almost made me raise my hand but I'm tougher than that!
+      - Let's start with sub role. It might be too much for you to act the main role.
+    - Extra
+      - Really?
+      - Why so serious? It's happy scene..
+      - Next....
+      - My son looked more happy when he got the first meal ever in his life.
+      - Should I give you my psychiatrist number?
+  - Sad
+    - Main
+      - I am so touched.. Can I give you a hug?
+      - You don't know but I was crying.
+      - Dang.. This is deep. I don't know what to do.
+      - I felt that my weekend is over and Monday is coming. This is totaly sad..
+      - I need your happy face back. You are making me sad too.
+    - Sub
+      - What can I say. Good job. But that's all.
+      - We need a person who can deliver right feelings.
+       - You look sad. But it's not making me feel the same. An actor should touch everyone's heart.
+       - Good job. As usual like everyone else.
+       - What can I say.. A new normal?
+    - Extra
+       - Look at your score. Now you will be sad.
+       - My daughter looked more sad when I took her cookie.
+       - There's room for street walker 1 role. Perfect fit for you.
+       - Have you ever received an 'F' in highschool? It's same with your score right now.
+       - When is the next earlist flight time? I think you need to go back home.
+  - Surprise
+     - Main
+       - OMG. I thought it is your birthday.
+       - Are people really back from death? Your acting is so real.
+       - Well done! Well done! Let's sign the contract!
+       - Don't you go away from this movie. You are already hired.
+       - Swag! AAA for your action!
+     - Sub
+       - I think I can take the main role instead you. You can be my good partner as sub member.
+       - We are looking for Mario but you are like Yoshi.
+       - I see both pros and cons. Can't suggest you to become main role.
+       - This might not be the right time for you to take important piece of the movie. But you are welcome to be part of the rest.
+       - You are like Americano but we are looking for Latte. Hope this make sense for you.
+     - Extra
+       - Are you happy or sad? I just don't get it.
+       - What the ---(Beep)--- you are ---(Beep)--- I really ---(Beep)--- Go home.
+       - Next?
+       - My cat can act better than you.
+       - I am so surprised how much you can get surprised. Can I take this role instead of you?
+  - Angry
+     - Main
+       - OMG. Somebody call 911! There could be a street fight!
+       - Welcome to the Revengers. You are the first Revenger, General.
+       - Amazing. I was so scared if you are going to punch me
+       - Leave all your glasses away! It's about to get crushed!
+       - You are already a star!
+     - Sub
+       - I see anger in you but need little more than that.
+       - Come on! Almost but not enough.
+       - It was worth seeing you but I will have to say no for the main role.
+       - Even if everyone votes for you, not me.
+       - Almost there. Keep on practicing. You will become good at it oneday.
+     - Extra
+       - We needed an actor not a person who needs anger management.
+       - Now you can get really angry because I am going to fail you.
+       - You are already fired.
+       - I felt like I am back in 50s when I saw your acting.
+       - My teenager son can be better for this position.
+     
 ## 최종평가
 - 최종 합산 결과 등급(주연, 조연, 엑스트라)에 대한 피드백 
+  - Main
+    You are the one that we've been looking for long time. It is now your destiny to be on the screen and share your talent with others.
+    There will be only shine on your way and we are ready to make it even shinier.
+  - Sub
+    Although we have talked bad things about you, you still deserve a role in this movie. 
+    A rock won't be beatiful but as time goes by, it can turn into a diamond. We trust your potential yet you need more experiences.
+    Let's start with a sub role but we promise you will take main role when time comes.
+  - Extra
+    Sometimes we will try to be nice but we should say what's right for you. 
+    You are just one piece of ---(beep)--- and your acting is ---(beep)--- and we will never ---(beep)---. 
+    But if you still want to be part of this movie, we can spare little extra roles for you. 
+    It will be like a person who gets into a car accident by villains.
+    
 - 캐스팅에 대한 피드백
-
+  - Main
+    - Here's the contract. You will be acting the 'Steel Man' in this movie.
+    - We will be hiring you as our first "Revenger", 'General North America.'
+    - Finally we decided to give you one of main character, 'Mosquito Man'. Let's suck all the villain's blood.
+    - 'Black Panda' is what we are offering. Save Uganda from the villains!
+  - Sub
+    - You are perfect fit for 'Black Window'. Get ready for blue screen.
+    - How about 'Eagle Eye'? We are not planning for solo movie yet but may be good enough for you.
+    - I will recommend 'Version' for you. 'Version' is not fully patched yet but he will get updated soon..
+    - 'Greet' is one of the sub character. Only problem is 'Greet' will be only greeting the Revengers..
+  - Extra
+    - You can become one of villains troops. How about troop 23? At least you will have 5ms of show time.
+    - There's a scene where millions of people are getting involved with explosions. You want to me a person 82?
+    - Life is 42 my friend. I have only extra available for you.
+    - Think about time when you were in highschool. The position I can offer will remind you that time.
+    - Are you still here? I just needed a human tree standing by 'Greet'. It will take only 2 minutes to take the shot.
