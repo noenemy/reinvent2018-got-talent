@@ -10,7 +10,7 @@ namespace GotTalent_API.Utils
     {
         static ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
 
-        public static int AddGameResultToRedis(GameResult gameResult)
+        public static void AddGameResultToRedis(GameResult gameResult)
         {
             IDatabase db = redis.GetDatabase();
 
@@ -18,8 +18,6 @@ namespace GotTalent_API.Utils
             gameResults.Add(gameResult.game_id, gameResult);
 
             db.SortedSetIncrement("leaderboard", gameResult.game_id, gameResult.total_score);
-
-            return GetGameRanking(gameResult.game_id);
         }
 
         public static void AddGameResultListToRedis(List<GameResult> gameResultList)

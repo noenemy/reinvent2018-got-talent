@@ -100,7 +100,8 @@ namespace GotTalent_API.Controllers
             var value = _context.GameResult.Add(newGameResult);
             await _context.SaveChangesAsync();
 
-            newGameResult.total_rank = RedisUtil.AddGameResultToRedis(newGameResult);
+            RedisUtil.AddGameResultToRedis(newGameResult);
+            newGameResult.total_rank = RedisUtil.GetGameRanking(newGameResult.game_id);
 
             return Ok(new {newGameResult, castResult.actor, castResult.title, signedURLs});
         }
