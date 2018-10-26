@@ -22,9 +22,12 @@ This demo is to play a simple game using facial expression to be recognized usin
    - https://git-scm.com/download/mac
 6. Install libgdiplus for using Graphics in API project
    - brew install mono-libgdiplus
-7. Install Postman (optional)
+7. Install Redis
+   - brew install redis
+   - redis-server (This will start redis server)
+8. Install Postman (optional)
    - http://www.getpostman.com
-8. Recommended extensions for Visual Studio Code (optional)
+9. Recommended extensions for Visual Studio Code (optional)
    - C# by OmniSharp
    - C# Extensions
    - NuGet package manager
