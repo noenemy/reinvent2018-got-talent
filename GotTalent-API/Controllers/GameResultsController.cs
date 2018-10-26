@@ -8,6 +8,7 @@ using GotTalent_API.Models;
 using GotTalent_API.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 
 namespace GotTalent_API.Controllers
 {
@@ -29,6 +30,7 @@ namespace GotTalent_API.Controllers
         public async Task<IActionResult> GetGameResults()
         {
             var values = await _context.GameResult.ToListAsync();
+            //var values = RedisUtil.GetTopRankings(0, 9);
             return Ok(values);
         }
 
@@ -91,11 +93,18 @@ namespace GotTalent_API.Controllers
                 age_result = ageResult 
             };
 
+            Game game = await _context.Game.Where(x => x.game_id == game_id).FirstOrDefaultAsync();
+            game.end_date = DateTime.Now;
+            game.share_yn = "Y";
+
             var value = _context.GameResult.Add(newGameResult);
-            await _context.SaveChangesAsync();  
+            await _context.SaveChangesAsync();
+
+            newGameResult.total_rank = RedisUtil.AddGameResultToRedis(newGameResult);
 
             return Ok(new {newGameResult, castResult.actor, castResult.title, signedURLs});
         }
+
 
         // PUT api/gameresults/5
         [HttpPut("{game_id}")]
@@ -105,8 +114,13 @@ namespace GotTalent_API.Controllers
 
         // DELETE api/gameresults/5
         [HttpDelete("{game_id}")]
-        public void Delete(int game_id)
+        public async Task<IActionResult> Delete(int game_id)
         {
+            GameResult gameResult = new GameResult() { game_id = game_id };
+            _context.GameResult.Remove(gameResult);
+            var result = await _context.SaveChangesAsync();
+
+            return Ok(result);
         }
     }            
 }
