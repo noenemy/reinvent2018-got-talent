@@ -24,7 +24,7 @@ This demo is to play a simple game using facial expression to be recognized usin
    - brew install mono-libgdiplus
 7. Install Redis
    - brew install redis
-   - redis-server (This will start redis server)
+   - redis-server (This will start the redis daemon on localhost)
 8. Install Postman (optional)
    - http://www.getpostman.com
 9. Recommended extensions for Visual Studio Code (optional)
