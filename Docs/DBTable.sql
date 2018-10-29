@@ -84,13 +84,16 @@ CREATE TABLE tb_game_rank_type
     ON UPDATE RESTRICT
 ) DEFAULT CHARSET=utf8;
 
-tb_feedback
+-- 게임 내 NPC 피드백 대사 (총 82개)
+CREATE TABLE tb_feedback
 (
-feedback_id,
-judge_gender, // male, female
-action_type,  // happy, sad, ..., total
-grade, // main, sub, extra
-feedback // string
-)
+  feedback_id INT NOT NULL AUTO_INCREMENT,
+  judge_gender VARCHAR(10) DEFAULT NULL, 
+  action_type VARCHAR(100) NOT NULL,  
+  grade varchar(10) DEFAULT NULL, 
+  feedback VARCHAR(2000) DEFAULT NULL,
+  PRIMARY KEY(feedback_id)
+) DEFAULT CHARSET=utf8;
+
 
 
