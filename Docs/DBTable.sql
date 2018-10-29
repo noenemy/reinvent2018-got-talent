@@ -84,3 +84,13 @@ CREATE TABLE tb_game_rank_type
     ON UPDATE RESTRICT
 ) DEFAULT CHARSET=utf8;
 
+tb_feedback
+(
+feedback_id,
+judge_gender, // male, female
+action_type,  // happy, sad, ..., total
+grade, // main, sub, extra
+feedback // string
+)
+
+
