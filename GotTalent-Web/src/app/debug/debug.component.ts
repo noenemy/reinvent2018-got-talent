@@ -6,8 +6,8 @@ import { StagelogService } from '../_services/stagelog.service';
 import { StageLog } from '../_models/stagelog';
 import { CastService } from '../_services/cast.service';
 import { Cast } from '../_models/cast';
-import { Ranking } from '../_models/ranking';
-import { RankingService } from '../_services/ranking.service';
+import { GameResultService } from '../_services/gameresult.service';
+import { GameResult } from '../_models/gameresult';
 
 @Component({
   selector: 'app-debug',
@@ -15,11 +15,11 @@ import { RankingService } from '../_services/ranking.service';
   styleUrls: ['./debug.component.css']
 })
 export class DebugComponent implements OnInit {
-  rankingColumns: string[];
+  gameResultColumns: string[];
   gameColumns: string[];
   castColumns: string[];
   stageLogColumns: string[];
-  rankings: Ranking[];
+  gameResults: GameResult[];
   games: Game[];
   castList: Cast[];
   stageLogs: StageLog[];
@@ -28,21 +28,21 @@ export class DebugComponent implements OnInit {
     private gameService: GameService,
     private stageLogService: StagelogService,
     private castService: CastService,
-    private rankingService: RankingService) { }
+    private gameResultService: GameResultService) { }
 
   ngOnInit() {
-    this.rankingColumns = this.getRankingColumns();
+    this.gameResultColumns = this.getGameResultColumns();
     this.gameColumns = this.getGameColumns();
     this.castColumns = this.getCastColumns();
     this.stageLogColumns = this.getStageLogColumns();
-    this.getRankings();
+    this.getGameResults();
     this.getGames();
     this.getCastList();
     this.getStageLogs();    
   }
-  getRankings() {
-    this.rankingService.getRankings().subscribe((rankings: Ranking[]) => {
-      this.rankings = rankings;
+  getGameResults() {
+    this.gameResultService.getGameResults().subscribe((gameResults: GameResult[]) => {
+      this.gameResults = gameResults;
     }, error => {
       console.log(error);
     });
@@ -72,7 +72,7 @@ export class DebugComponent implements OnInit {
     });
   }
 
-  getRankingColumns(): string[] {
+  getGameResultColumns(): string[] {
     return ['game_id', 'result_page_url', 'total_score', 'total_rank', 'cast_result', 'grade_result', 'gender_result', 'age_result'];
   }
 

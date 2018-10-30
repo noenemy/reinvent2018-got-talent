@@ -16,7 +16,7 @@ export class RankingService {
     return this.http.get<Ranking[]>(this.baseUrl + 'rankings');
   }
 
-  getRanking(game_id): Observable<Ranking> {
+  get(game_id): Observable<Ranking> {
     return this.http.get<Ranking>(this.baseUrl + 'rankings/' + game_id);
   }
 }

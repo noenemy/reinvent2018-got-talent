@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Game } from '../_models/game';
+import { GameResult } from '../_models/gameresult';
 
 const httpOptions = {
   'Accept' : 'application/json',
@@ -29,7 +30,7 @@ export class GameService {
     return this.http.post<number>(this.baseUrl + 'games', user_name);
   }
 
-  calcGameResult(game_id): Observable<number> {
-    return this.http.get<number>(this.baseUrl + 'gameresults/' + game_id + '/calc');
+  calcGameResult(game_id): Observable<GameResult> {
+    return this.http.get<GameResult>(this.baseUrl + 'gameresults/' + game_id + '/calc');
   }
 }

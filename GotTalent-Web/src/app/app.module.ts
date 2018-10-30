@@ -14,6 +14,7 @@ import { GameService } from './_services/game.service';
 import { StagelogService } from './_services/stagelog.service';
 import { CastService } from './_services/cast.service';
 import { RankingService } from './_services/ranking.service';
+import { GameResultService } from './_services/gameresult.service';
 import { GameComponent } from './game/game.component';
 import { GameSplashComponent } from './game/game-splash/game-splash.component';
 import { GameStartComponent } from './game/game-start/game-start.component';
@@ -51,6 +52,7 @@ import { DebugComponent } from './debug/debug.component';
       GameService,
       StagelogService,
       CastService,
+      GameResultService,
       RankingService,
       AlertifyService
    ],
