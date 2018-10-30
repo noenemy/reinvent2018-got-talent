@@ -1,38 +1,58 @@
-<div class="container text-center">
-    <h5 class="text-warning">[TODO: start screen]</h5>
-    <h1 class="display-3">Welcome.</h1>
-    <h5 class="text-gray-soft text-regular">What is your name?</h5>
-    {{ stage }}
-    <br>
-    <form [formGroup]="gameForm" (ngSubmit)="createGame()">
-      <div class="input-group input-group-lg">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-lg">
-              <fa name="user"></fa>&nbsp;Name
-            </span>
-          </div>
-          <input type="text" formControlName="userName" class="form-control"
-            [ngClass]="{'is-invalid': gameForm.get('userName').errors && gameForm.get('userName').touched}"
-            aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Username">
-          <div class="invalid-feedback" 
-            *ngIf="gameForm.get('userName').hasError('required') && gameForm.get('userName').touched">
-            Username is required
-          </div>            
-          <div class="invalid-feedback" 
-            *ngIf="gameForm.get('userName').hasError('minlength') && gameForm.get('userName').touched">
-            Username must be at least 3 characters
-          </div>
-          <div class="invalid-feedback" 
-          *ngIf="gameForm.get('userName').hasError('maxlength') && gameForm.get('userName').touched">
-          Username cannot exceed 50 characters
-          </div>
-        </div>
-        <br/><br/>
-        <div class="text-center">
-            <button [disabled]="!gameForm.valid" type="submit" class="btn btn-primary btn-lg">
-              <fa name="arrow-right"></fa> Go Onstage
-            </button>
-        </div>
-    </form>
-  </div>
+
+<div class="container">
+    <div class="row">
+      <div class="col-3">
+        <img src="../../../assets/images/judge/normal.jpeg">
+      </div>
   
+      <div class="col-9">
+
+          <br><br>
+          <div id="section_2" class="alert alert-info col">
+              <h3>Hello there!</h3>
+              <h5>Welcome to Re:Invent got talent 2018.</h5>
+              <br>
+              <h5>We are looking for new star to become main role for our movie.</h5> 
+              <h5>This movie is most wanted in 2019 and we guarantee you will become the hottest movie star in the multi universe.</h5>
+              <br><br>
+              <h3>Let's begin with your name.</h3>
+              <br>
+          </div>
+
+          <br>
+
+          <form [formGroup]="gameForm" (ngSubmit)="createGame()">
+              <div class="input-group input-group-lg">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-lg">
+                      <fa name="user"></fa>&nbsp;Name
+                    </span>
+                  </div>
+                  <input type="text" formControlName="userName" class="form-control"
+                    [ngClass]="{'is-invalid': gameForm.get('userName').errors && gameForm.get('userName').touched}"
+                    aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Username">
+                  <div class="invalid-feedback" 
+                    *ngIf="gameForm.get('userName').hasError('required') && gameForm.get('userName').touched">
+                    Username is required
+                  </div>            
+                  <div class="invalid-feedback" 
+                    *ngIf="gameForm.get('userName').hasError('minlength') && gameForm.get('userName').touched">
+                    Username must be at least 3 characters
+                  </div>
+                  <div class="invalid-feedback" 
+                  *ngIf="gameForm.get('userName').hasError('maxlength') && gameForm.get('userName').touched">
+                  Username cannot exceed 50 characters
+                  </div>
+                </div>
+                <br/>
+                <div class="text-center">
+                    <button [disabled]="!gameForm.valid" type="submit" class="btn btn-primary btn-lg">
+                      <fa name="arrow-right"></fa> Go Onstage
+                    </button>
+                </div>
+            </form>
+      </div>
+  
+    </div>
+  
+  </div>

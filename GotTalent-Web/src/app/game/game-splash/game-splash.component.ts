@@ -16,9 +16,9 @@ export class GameSplashComponent implements OnInit {
   }
 
   animate(): void {
-    TweenMax.fromTo('#section_1', 3, {x:300}, {x:10});
-    TweenMax.fromTo('#section_2', 2.4, {x:300}, {x:10});
-    TweenMax.fromTo('#section_3', 3.3, {x:300}, {x:10});
+    // TweenMax.fromTo('#section_1', 3, {x:300}, {x:10});
+    // TweenMax.fromTo('#section_2', 2.4, {x:300}, {x:10});
+    // TweenMax.fromTo('#section_3', 3.3, {x:300}, {x:10});
   }
 
   gameStart() {
