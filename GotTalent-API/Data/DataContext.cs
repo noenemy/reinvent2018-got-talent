@@ -11,6 +11,7 @@ namespace GotTalent_API.Data
         public DbSet<RankingByType> RankingByType { get; set; }
         public DbSet<Game> Game { get; set; }
         public DbSet<Cast> Cast { get; set; }
+        public DbSet<Feedback> Feedback { get; set; }
         public DbSet<GameResult> GameResult { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
