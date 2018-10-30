@@ -122,7 +122,7 @@ export class GameStageComponent implements OnInit {
 
       console.log(this.action_type);
     }, error => {
-      this.alertify.error(error);
+      this.alertify.error('Hey. something wrong. Try again.');
     });
   }
 }
