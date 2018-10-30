@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { RankingComponent } from './ranking/ranking.component';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
-import { PlaydemoComponent } from './playdemo/playdemo.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { AboutusComponent } from './aboutus/aboutus.component';
@@ -23,6 +22,7 @@ import { GameResultComponent } from './game/game-result/game-result.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertifyService } from './_services/alertify.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { DebugComponent } from './debug/debug.component';
 
 @NgModule({
    declarations: [
@@ -30,13 +30,13 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
       RankingComponent,
       NavComponent,
       HomeComponent,
-      PlaydemoComponent,
       AboutusComponent,
       GameComponent,
       GameSplashComponent,
       GameStartComponent,
       GameStageComponent,
-      GameResultComponent
+      GameResultComponent,
+      DebugComponent
    ],
    imports: [
       BrowserModule,
