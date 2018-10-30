@@ -30,7 +30,6 @@ namespace GotTalent_API.Controllers
         public async Task<IActionResult> GetGameResults()
         {
             var values = await _context.GameResult.ToListAsync();
-            //var values = RedisUtil.GetTopRankings(0, 9);
             return Ok(values);
         }
 
