@@ -1,5 +1,5 @@
 <p></p>
 <app-game-splash *ngIf="this.stage == 'splash'" (go)="goStage($event)"></app-game-splash>
 <app-game-start *ngIf="this.stage == 'start'" [game_id]="game_id" (gameCreated)="onGameCreated($event)"></app-game-start>
-<app-game-stage *ngIf="this.stage == 'stage'" [game_id]="game_id" [action_type]="action_type" (stageCompleted)="onStageCompleted($event)"></app-game-stage>
+<app-game-stage *ngIf="this.stage == 'stage'" [game_id]="game_id" [action_type]="action_type" [message1]="message1" [message2]="message2" (stageCompleted)="onStageCompleted($event)"></app-game-stage>
 <app-game-result *ngIf="this.stage == 'result'" [game_id]="game_id" (go)="goStage($event)"></app-game-result>

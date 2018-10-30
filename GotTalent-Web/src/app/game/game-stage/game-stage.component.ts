@@ -16,11 +16,13 @@ export class GameStageComponent implements OnInit {
   @Input() stage: string;
   @Input() game_id: number;
   @Input() action_type: string;
+  @Input() message1: string;
+  @Input() message2: string;
   @Output() stageCompleted = new EventEmitter<string>();
 
   imageSignedURL: string;
   your_score: any;
-
+ 
   // toggle webcam on/off
   public showWebcam = true;
   public allowCameraSwitch = true;
@@ -117,6 +119,8 @@ export class GameStageComponent implements OnInit {
       }
 
       this.stageCompleted.emit(this.action_type);
+
+      console.log(this.action_type);
     }, error => {
       this.alertify.error(error);
     });

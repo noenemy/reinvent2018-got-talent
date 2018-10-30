@@ -1,64 +1,78 @@
-<div class="container text-center">
-    <h5 class="text-warning">[TODO: stage screen]</h5>
-    <h1 class="display-3">Ready? Action!</h1>
-    <br>
 
-    <div class="row">
-      <div class="col-sm-8">
-          <h5 class="display-5">Stage : {{ action_type }}</h5>
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <img src="../../../assets/images/judge/writing.jpeg">
+    </div>
+  
+    <div class="col-9">
 
-          <div class="text-center">
-              <webcam [height]="500" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
-                      [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
-                      [videoOptions]="videoOptions"
-                      (cameraSwitched)="cameraWasSwitched($event)"
-                      (initError)="handleInitError($event)">
-              </webcam>
-          
-              <br/>
-              <button class="btn btn-primary btn-lg mr-2" (click)="triggerSnapshot();" *ngIf="action_type!='NoMoreAction'">
-                <fa name="camera"></fa> Take A Snapshot
-              </button>
-              <button class="btn btn-secondary btn-lg" (click)="toggleWebcam();" *ngIf="action_type!='NoMoreAction'">
-                <fa name="toggle-on"></fa> Toggle Webcam
-              </button>
-              
-              <br/>
-              <!--
-              <button class="actionBtn" (click)="showNextWebcam(true);" [disabled]="!multipleWebcamsAvailable">Next Webcam</button>
-              <input id="cameraSwitchCheckbox" type="checkbox" [(ngModel)]="allowCameraSwitch"><label for="cameraSwitchCheckbox">Allow Camera Switch</label>
-              <br/>
-              DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">
-              <button (click)="showNextWebcam(deviceId);">Activate</button>
-              -->
-          
-          </div>
-
+      <div id="section_2" class="alert alert-info col">
+          <h4>{{ this.message1 }}</h4>
+          <h4>{{ this.message2 }}</h4>
       </div>
-      <div class="col-sm-4">
 
-        <h5 class="display-5">Your Score</h5>
+      <div class="container">
+        <div class="row">
+          <!-- left: webcam pane -->
+          <div class="col-8">
 
-        <div class="container" *ngIf="imageSignedURL">
-          <div class="snapshot card" style="width: 18rem;">
-            <img class="card-img-top" [src]="imageSignedURL" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Your Score</h5>
-              <p class="card-text">{{ your_score }}</p>
+              <h4>Stage: <span ng-change="showMessage()" class="badge badge-secondary">{{ action_type }}</span></h4>
+              <div class="text-center">
+                <webcam [height]="400" [width]="500" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+                        [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+                        [videoOptions]="videoOptions"
+                        (cameraSwitched)="cameraWasSwitched($event)"
+                        (initError)="handleInitError($event)">
+                </webcam>
+                
+                <br/>
+                <button class="btn btn-primary btn-lg mr-2" (click)="triggerSnapshot();" *ngIf="action_type!='NoMoreAction'">
+                  <fa name="camera"></fa> Take A Snapshot
+                </button>
+                <!-- <button class="btn btn-secondary btn-lg" (click)="toggleWebcam();" *ngIf="action_type!='NoMoreAction'">
+                  <fa name="toggle-on"></fa> Toggle Webcam
+                </button> -->
+                      
+                <br/>
+              </div>
+          </div>
+          <!-- left: webcam pane -->
+
+          <!-- right: result pane -->
+          <div class="col-4">
+            <br><br>
+            <div class="container" *ngIf="imageSignedURL">
+                <div class="snapshot card" style="width: 12rem;">
+                  <img class="card-img-top" [src]="imageSignedURL" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">Your Score</h5>
+                    <p class="card-text">{{ your_score | number }}</p>
+                  </div>
+                </div>
+                <br/>
+                <div class="text-center" *ngIf="action_type=='NoMoreAction'">
+                    <button type="button" class="btn btn-primary btn-lg" (click)="gameEnd()">
+                      <fa name="user-check"></fa> SEE RESULT
+                    </button>
+                </div> 
             </div>
           </div>
-          <br/>
-          <div class="text-center" *ngIf="action_type=='NoMoreAction'">
-              <button type="button" class="btn btn-primary btn-lg" (click)="gameEnd()">
-                <fa name="user-check"></fa> SEE RESULT
-              </button>
-          </div> 
-          
-      </div>
-    </div>
+          <!-- right: result pane -->
 
-    <h4 *ngIf="errors.length > 0">Messages:</h4>
-    <ul *ngFor="let error of errors">
-      <li>{{error | json}}</li>
-    </ul>
+        </div>
+      </div>
+
+
+    </div>
+    
+  </div>
+</div>
+
+
+
+<h4 *ngIf="errors.length > 0">Messages:</h4>
+<ul *ngFor="let error of errors">
+  <li>{{error | json}}</li>
+</ul>
   
