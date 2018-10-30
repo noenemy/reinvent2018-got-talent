@@ -8,7 +8,8 @@ namespace GotTalent_API.Utils
 {
     public class RedisUtil
     {
-        static ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+        static string REDIS_SERVERNAME = "localhost";
+        static ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(REDIS_SERVERNAME);
 
         public static void AddGameResultToRedis(GameResult gameResult)
         {
@@ -61,6 +62,12 @@ namespace GotTalent_API.Utils
                gameResultList.Add(item);
            }
            return gameResultList;
+        }
+
+        public static void ClearAll()
+        {
+            var server = redis.GetServer(REDIS_SERVERNAME);
+            server.FlushAllDatabases();
         }
     }
 }
