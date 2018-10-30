@@ -11,6 +11,7 @@ namespace GotTalent_API.Models
         public string gender { get; set; }
         public int age { get; set; }
         public double total_score { get; set; }
+        public string grade { get; set; }
         public string photoURL { get; set; }
     }
 }

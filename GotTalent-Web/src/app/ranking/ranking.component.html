@@ -24,7 +24,7 @@
             <td><img src="{{ ranking.photoURL }}" width="50px" height="50px"></td>
             <td>{{ ranking.name }}</td>
             <td>{{ ranking.gender }}({{ ranking.age }})</td>
-            <td>{{ ranking.total_score }}</td>
+            <td>{{ ranking.total_score | number }}</td>
             <td>{{ ranking.grade }}</td>
           </tr>
         </table>
