@@ -1,0 +1,262 @@
+# CloudFormation template for re:invent2018 Builder's Fair - GotTalent
+# Created : Thursday, November 1, 2018
+# Written by Sungshik Jou liks79@gmail.com / sungshik@amazon.com
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: Template to build the base network for re:invent2018 Builder's Fair - GotTalent. This template will provision minimum network resources. 
+Parameters:
+  VPCCIDR:
+    Description: CIDR Block for VPC
+    Type: String
+    Default: 10.99.10.0/16
+  PUBSUBNET1:
+    Description: Public Subnet 1
+    Type: String
+    Default: 10.99.10.0/24
+  PRISUBNET1:
+    Description: Private Subnet 1
+    Type: String
+    Default: 10.99.15.0/24
+  KeyName:
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Description: Keyname for the keypair for EC2 instance
+
+Mappings:
+  AmazonLinuxAMI:
+    us-east-1:
+      AMI: ami-08111162
+    us-east-2:
+      AMI: ami-06547163
+    us-west-1:
+      AMI: ami-1b0f7d7b
+    us-west-2:
+      AMI: ami-f0091d91
+    eu-west-1:
+      AMI: ami-31328842
+    eu-central-1:
+      AMI: ami-e2df388d
+    ap-northeast-1:
+      AMI: ami-f80e0596
+    ap-northeast-2:
+      AMI: ami-6598510b
+    ap-southeast-1:
+      AMI: ami-c9b572aa
+    ap-southeast-2:
+      AMI: ami-f2210191
+    sa-east-1:
+      AMI: ami-1e159872
+      
+Resources:
+  GotTalentRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: AppInstance-Policy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - '*'
+                Resource: '*'
+  
+  GotTalentInstProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Roles:
+        - !Ref GotTalentRole
+      InstanceProfileName: GotTalentInstanceProfile
+
+  VPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      CidrBlock: !Ref VPCCIDR
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      Tags:
+        - Key: VPC
+          Value: 'reinvent2018-GotTalent'
+        - Key: Name
+          Value: reinvent2018-GotTalent
+
+  InternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    DependsOn: VPC
+    Properties:
+      Tags:
+        - Key: Name
+          Value: reinvent2018 VPC IGW
+  AttachGateway:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    DependsOn:
+      - VPC
+      - InternetGateway
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+  
+  PublicSubnet1:
+    Type: 'AWS::EC2::Subnet'
+    DependsOn: VPC
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PUBSUBNET1
+      MapPublicIpOnLaunch: 'true'
+      AvailabilityZone: !Select 
+        - '0'
+        - !GetAZs ''
+      Tags:
+        - Key: Name
+          Value: Public Subnet - 1
+  
+  PrivateSubnet1:
+    Type: 'AWS::EC2::Subnet'
+    DependsOn: VPC
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PRISUBNET1
+      MapPublicIpOnLaunch: 'true'
+      AvailabilityZone: !Select 
+        - '1'
+        - !GetAZs ''
+      Tags:
+        - Key: Name
+          Value: Private Subnet - 1
+  
+  PublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    DependsOn:
+      - VPC
+      - AttachGateway
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: Public Routing Table
+
+  PublicRouteIGW:
+    Type: 'AWS::EC2::Route'
+    DependsOn:
+      - PublicRouteTable
+      - InternetGateway
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  PublicRouteTableAssociationA:
+    Type: 'AWS::EC2::SubnetRouteTableAssociation'
+    DependsOn:
+      - PublicSubnet1
+      - PublicRouteIGW
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+
+  GotTalentSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    DependsOn: AttachGateway
+    Properties:
+      GroupDescription: Security Group for GotTalent AppServer to enable SSH and http access
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: GotTalent SG
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: '0'
+          ToPort: '65535'
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: udp
+          FromPort: '0'
+          ToPort: '65535'
+          CidrIp: 0.0.0.0/0
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '22'
+          ToPort: '22'
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: '80'
+          ToPort: '80'
+          CidrIp: 0.0.0.0/0
+
+  GotTalentInstanceWaitConditionHandle:
+    Type: 'AWS::CloudFormation::WaitConditionHandle'
+
+  GotTalentInstanceWaitCondition:
+    Type: 'AWS::CloudFormation::WaitCondition'
+    DependsOn:
+      - GotTalentInstance
+    Properties:
+      Count: '1'
+      Handle: !Ref GotTalentInstanceWaitConditionHandle
+      Timeout: 900
+
+  GotTalentInstance:
+    Type: 'AWS::EC2::Instance'
+    DependsOn:
+      - PublicSubnet1
+      - VPC
+      - GotTalentSecurityGroup
+    Properties:
+      IamInstanceProfile: !Ref GotTalentInstProfile
+      KeyName: !Ref KeyName
+      ImageId: !FindInMap 
+        - AmazonLinuxAMI
+        - !Ref 'AWS::Region'
+        - AMI
+      InstanceType: t2.micro
+      NetworkInterfaces:
+        - DeviceIndex: '0'
+          AssociatePublicIpAddress: 'true'
+          SubnetId: !Ref PublicSubnet1
+          GroupSet:
+            - !Ref GotTalentSecurityGroup
+      Tags:
+        - Key: Name
+          Value: GotTalentInstance
+      UserData: 
+        Fn::Base64:
+          !Sub |
+              #!/bin/bash -ex 
+              yum update -y
+              yum install -y aws-cli
+              /opt/aws/bin/cfn-signal -e $? '{!Ref GotTalentInstanceWaitConditionHandle}'
+Outputs:
+  KeyPair:
+    Value: !Ref KeyName
+    Description: The Keypair for the GotTalent instance.
+  GotTalentInstance:
+    Value: !GetAtt 
+      - GotTalentInstance
+      - PublicIp
+    Description: Public IP address of the Command Host
+  Region:
+    Value: !Ref AWS::Region
+    Description: Region used for the lab
+  VPCId:
+    Value: !Ref VPC
+    Description: VPC Resource ID
+    Export:
+      Name: !Sub "${AWS::StackName}-VPCID"
+  PubSub1:
+    Value: !Ref PublicSubnet1
+    Description: Public Subnet 1 Resource ID
+    Export:
+      Name: !Sub "${AWS::StackName}-PUBSUB-1"
+  PriSub1:
+    Value: !Ref PrivateSubnet1
+    Description: Private Subnet 1 Resource ID
+    Export:
+      Name: !Sub "${AWS::StackName}-PRISUB-1"
