@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertifyService } from './_services/alertify.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { DebugComponent } from './debug/debug.component';
+import { PlaydemoComponent } from './playdemo/playdemo.component';
 
 @NgModule({
    declarations: [
@@ -37,7 +38,8 @@ import { DebugComponent } from './debug/debug.component';
       GameStartComponent,
       GameStageComponent,
       GameResultComponent,
-      DebugComponent
+      DebugComponent,
+      PlaydemoComponent
    ],
    imports: [
       BrowserModule,

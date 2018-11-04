@@ -112,5 +112,42 @@ namespace GotTalent_API.Utils
                     face.AgeRange.Low + " and " + face.AgeRange.High + " years old.");
             }
         }
+
+        public async static Task<FaceDetail> GetObjectDetailFromStream(IAmazonRekognition rekognitionClient, MemoryStream stream)
+        {
+            FaceDetail result = null;
+            DetectLabelsRequest detectLabelsRequest = new DetectLabelsRequest()
+            {
+                Image = new Image {
+                    Bytes = stream
+                },
+                MaxLabels = 10,
+                MinConfidence = 75F
+            };
+
+            try
+            {
+                Task<DetectLabelsResponse> detectTask = rekognitionClient.DetectLabelsAsync(detectLabelsRequest);
+                DetectLabelsResponse detectLabelsResponse = await detectTask;
+
+               PrintObjectDetails(detectLabelsResponse.Labels);
+
+                // if (detectFacesResponse.FaceDetails.Count > 0)
+                //     result = detectFacesResponse.FaceDetails[0]; // take the 1st face only
+            }
+            catch (AmazonRekognitionException rekognitionException)
+            {
+                Console.WriteLine(rekognitionException.Message, rekognitionException.InnerException);
+            }
+            return result;
+        }
+
+        private static void PrintObjectDetails(List<Label> labels)
+        {
+            foreach(Label label in labels)
+            {
+                Console.WriteLine("Label: name={0} confidence={1}", label.Name, label.Confidence);
+            }
+        }
     }
 }
