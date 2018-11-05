@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
     this.game_id = game_id;
     this.action_type = 'Profile';
     this.message1 = 'We will start the audition right away. Lights, Camera..';
-    this.message2 = 'Let\'s begin with profile picture';   
+    this.message2 = 'Let\'s begin with your profile picture.';   
     this.goStage('stage');
 
   }
@@ -37,7 +37,7 @@ export class GameComponent implements OnInit {
     switch (action_type) {
       case 'Profile':
         this.action_type = 'Happiness';
-        this.message1 = 'Out of all the feelings we get, my famous one would be happy.';
+        this.message1 = 'Out of all the feelings we get, my famous one would be happy face.';
         this.message2 = 'Let me see your happy face!';
         break;
       case 'Happiness':
@@ -48,7 +48,7 @@ export class GameComponent implements OnInit {
       case 'Anger':
         this.action_type = 'Sadness';
         this.message1 = 'When half of the population was gone, we all felt sad.';
-        this.message2 = 'It is time to get your memories back. Show us the sad face';
+        this.message2 = 'It is time to get your memories back. Show us the sad face.';
         break;
       case 'Sadness':
         this.action_type = 'Suprise';
